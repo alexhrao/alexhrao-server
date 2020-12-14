@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF8">
+  <title>Login to BlueJot</title>
+  <link href="/resources/css/login.css" rel="stylesheet">
+  <script src="/resources/js/login.js"></script>
+  <script src="https://kit.fontawesome.com/d65c81f972.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="accountContainer">
+    <div id="picker">
+      <button id="loginPicker" class="picked">
+        Login
+      </button>
+      <button id="createPicker">
+        Sign Up
+      </button>
+    </div>
+    <div id="loginContainer" class="panel panel-shown">
+      <p>Welcome! Login below</p>
+      <p class="error-msg" id="loginErr"></p>
+      <input id="loginEmail" type="email" placeholder="Email">
+      <p class="error-msg" id="loginEmailErr"></p>
+      <input id="loginPassword" type="password" placeholder="Password">
+      <p class="error-msg" id="loginPasswordErr"></p>
+      <button>
+        Login
+      </button>
+    </div>
+    <div id="createContainer" class="panel">
+      <p>Welcome! Create a new account to save transcripts</p>
+      <p class="error-msg" id="createErr"></p>
+      <input type="email" id="createEmail" placeholder="Email">
+      <p class="error-msg" id="createEmailErr"></p>
+      <input type="password" id="createPassword" placeholder="Password">
+      <p class="error-msg" id="createPasswordErr"></p>
+      <input type="password" id="createConfirm" placeholder="Confirm">
+      <p class="error-msg" id="createConfirmErr"></p>
+      <button>
+        Create Account
+      </button>
+    </div>
+  </div>
+</body>
+</html>

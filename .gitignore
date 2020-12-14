@@ -1,0 +1,4 @@
+node_modules
+dist
+aws.zip
+.DS_Store

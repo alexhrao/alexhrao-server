@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Open+Sans:wght@300;400&display=swap');
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #232327;
+  color: white;
+  font-size: 24px;
+  font-family: 'Open Sans';
+}
+
+a {
+  color: #e9d7ff;
+}
+
+@media only screen 
+and (min-device-width: 0px) 
+and (max-device-width: 560px) { 
+  html,
+  body,
+  p {
+    font-size: 48px;
+  }
+}
