@@ -6,118 +6,16 @@ import querystring from 'querystring';
 import bodyParser from 'body-parser';
 import { SlackCredentials } from './SlackTypes';
 import { join } from 'path';
-import { LoginPayload, TranscriptPayload } from './User';
-import { checkSession, authenticate, createNewUser } from './authentication';
-import { ddb, userTableName } from './dynamo';
-
-interface TranscriptPayload1 {
-    meetingName: string;
-    transcript: string;
-    passcode?: string;
-};
-
-interface TranscriptResponse {
-    meetingName: string;
-    transcript: string;
-    unlocked: boolean;
-};
+import { AuthPayload, LoginPayload, TokenPayload, TranscriptPayload } from './User';
+import { checkSession, authenticate, createNewUser, addTokens } from './authentication';
+import { saveTranscript, fetchTranscript, generateTranscriptFile } from './transcript';
 
 const app = express();
-const saltRounds = 10;
 
-async function saveTranscript(payload: TranscriptPayload): Promise<void> {
-    return new Promise((res, rej) => {
-        ddb.updateItem({
-            TableName: userTableName,
-            Key: {
-                'userID': {
-                    S: payload.userID,
-                },
-            },
-            AttributeUpdates: {
-                'transcripts': {
-                    Action: 'ADD',
-                    Value: {
-                        M: {
-                            'meetingName': {
-                                S: payload.meetingName,
-                            },
-                            'events': {
-                                L: payload.events.map(te => {
-                                    return {
-                                        M: {
-                                            'type': {
-                                                S: te.type,
-                                            },
-                                            'participantName': {
-                                                S: te.participantName,
-                                            },
-                                            'timestamp': {
-                                                N: `${te.timestamp}`,
-                                            },
-                                            'body': {
-                                                S: te.body,
-                                            },
-                                        }
-                                    };
-                                }),
-                            },
-                        },
-                    }
-                }
-            }
-        }, (err, data) => {
-            if (err) {
-                rej('Invalid');
-                return;
-            } else {
-                res();
-            }
-        });
-    });
-}
-/*
-async function fetchTranscript(meeting: string, passcode?: string): Promise<TranscriptResponse> {
-    return new Promise((res, rej) => {
-        ddb.getItem({
-            TableName: ddbTableName,
-            Key: {
-                'meetingId': {
-                    S: meeting,
-                }
-            }
-        }, (err, data) => {
-            if (err || data.Item === undefined) {
-                rej('None found');
-                return;
-            }
-            const { Item: item } = data;
-            if (item['passcode'] !== undefined && passcode !== undefined) {
-                compare(passcode, item['passcode'].S as string).then(tf => {
-                    if (tf) {
-                        res({
-                            meetingName: item['meetingId'].S!,
-                            unlocked: false,
-                            transcript: item['transcript'].S!,
-                        });
-                    } else {
-                        rej('Invalid Passcode');
-                    }
-                });
-            } else {
-                res({
-                    meetingName: item['meetingId'].S!,
-                    unlocked: true,
-                    transcript: item['transcript'].S!,
-                });
-            }
-        });
-    });
-}
-*/
 app.use('/resources', staticServer(join(__dirname, './resources/')));
 app.use('/slack/events', bodyParser.json());
 app.use('/transcripts', bodyParser.json());
+app.use('/tokens', bodyParser.json());
 app.use('/login', bodyParser.json());
 app.use('/create', bodyParser.json());
 
@@ -193,25 +91,10 @@ app.get('/slack/oauth', (req, res) => {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'Content-Length': `${payload.length}`,
                 }
-            })
+            });
         })
         .then(resp => resp.json())
-        .then(json => {
-            console.log(json);
-            /*
-            pool[json.team_id] = {
-                token: json.access_token,
-                webClient: new WebClient(json.access_token),
-                conn: [],
-            };
-            */
-            res.redirect(`http://localhost:60000?nonce=${state}&token=${json.access_token}&team_id=${json.team.id}`);
-            /*
-            res.status(200)
-                .send(`<!DOCTYPE html><head></head><body><a href="http://localhost:60000?nonce=${state}&token=${json.access_token}&team_id=${json.team.id}">Click Here</a></body>`);
-            */
-            
-        });
+        .then(json => res.redirect(`http://localhost:60000?nonce=${state}&token=${json.access_token}&team_id=${json.team.id}`));
 });
 
 app.post('/slack/events', (req, res) => {
@@ -223,31 +106,36 @@ app.post('/slack/events', (req, res) => {
         return;
     }
 });
-/*
-app.get('/transcripts', (req, res) => {
-    const meeting = req.query['meeting'] as string;
-    fetchTranscript(meeting)
-        .then(t => {
-            res.status(200)
-                .contentType('json')
-                .json(t)
-                .end();
-        })
-        .catch(() => {
-            res.sendStatus(400).end();
+
+app.post('/tokens', async (req, res) => {
+    if (req.body.auth === undefined || (req.body.slack === undefined && req.body.outlook === undefined)) {
+        // get sad
+        res.sendStatus(400);
+        return;
+    }
+    const payload = req.body as TokenPayload;
+    // check our session
+    const tf = await checkSession(payload.auth);
+    if (tf) {
+        await addTokens(payload.auth.email, {
+            outlook: payload.outlook,
+            slack: payload.slack,
         });
-    return;
-});
-*/
-app.post('/transcripts2', async (req, res) => {
+        res.sendStatus(201);
+    } else {
+        res.sendStatus(403);
+    }
+})
+
+app.post('/transcripts', async (req, res) => {
     //
     const body = req.body;
-    if (body.token === undefined || body.meetingName === undefined || body.events === undefined || body.meetingInfo === undefined) {
+    if (body.auth === undefined || body.meetingName === undefined || body.events === undefined || body.meetingInfo === undefined) {
         res.sendStatus(400);
         return;
     }
     const payload = body as TranscriptPayload;
-    if (!(await checkSession(payload.userID, payload.token))) {
+    if (!(await checkSession(payload.auth))) {
         res.sendStatus(403);
         return;
     }
@@ -260,78 +148,60 @@ app.post('/transcripts2', async (req, res) => {
     res.sendStatus(201);
 });
 
-/*
-app.post('/transcripts', (req, res) => {
-    const { body: payload } = req;
-
-    if (payload['meetingName'] === undefined) {
-        res.sendStatus(400).end();
+app.get('/transcripts', async (req, res) => {
+    // no auth... so send the HTML. It'll be responsible for requesting
+    if (req.headers['authorization'] === undefined || req.headers['x-user-email'] === undefined) {
+        res.sendFile('./resources/html/transcript.html');
         return;
     }
-    // if no transcript, then we're retrieving a meeting...
-    if (payload['transcript'] === undefined) {
-        fetchTranscript(payload['meetingName'], payload['passcode'])
-            .then(t => {
-                res.status(200)
-                    .contentType('json')
-                    .json(t)
-                    .end();
-            })
-            .catch(() => {
-                res.sendStatus(401).end();
-            });
+    const bearer = /(?<=Bearer ).+/;
+    if (!bearer.test(req.headers['authorization'])) {
+        res.sendStatus(401);
         return;
     }
-    const transcript = payload as TranscriptPayload1;
-    if (!/^[a-zA-Z0-9]*$/.test(transcript.meetingName)) {
-        res.status(400).send(`Invalid meeting name: ${transcript.meetingName}`);
+    const token = bearer.exec(req.headers['authorization'])?.[0];
+    if (token === undefined) {
+        res.sendStatus(400);
         return;
     }
-    const item: DynamoDB.PutItemInputAttributeMap = {
-        'meetingId': {
-            S: transcript.meetingName,
-        },
-        'transcript': {
-            S: transcript.transcript,
-        },
-    };
-    let itemPromise: Promise<DynamoDB.PutItemInputAttributeMap>;
-    if (transcript.passcode !== undefined) {
-        itemPromise = hash(item['passcode'], saltRounds)
-            .then(pass => {
-                item['passcode'] = {
-                    S: pass,
-                };
-                return item;
-            });
+    const transcriptName = req.query['meeting'];
+    if (transcriptName === undefined) {
+        res.sendStatus(400);
+        return;
+    }
+    const auth: AuthPayload = {
+        email: req.headers['x-user-email'] as string,
+        token,
+        mac: req.headers['x-mac-address'] as string|undefined,
+    }
+    const tf = await checkSession(auth);
+    if (tf) {
+        // we know we're good... now look for that meeting
+        // if download, just sent the file...
+        try {
+            const file = await generateTranscriptFile(req.headers['x-user-email'] as string, transcriptName as string);
+            res.status(200)
+                .contentType('text/plain')
+                .send(file);
+        } catch {
+            res.sendStatus(404);
+        }
+        return;
     } else {
-        itemPromise = Promise.resolve(item);
+        res.sendStatus(403);
+        return;
     }
-    itemPromise.then(item => {
-        ddb.putItem({
-            TableName: ddbTableName,
-            Item: item,
-        }, (err, _) => {
-            if (err) {
-                res.status(500).send(err).end();
-            } else {
-                // respond with link? only if locked
-                if (transcript.passcode === undefined) {
-                    res.status(201).json({ 'link': `https://alexhrao.com/transcripts?meeting=${transcript.meetingName}`});
-                } else {
-                    res.sendStatus(201).end();
-                }
-            }
-        });
-    });
-});
-*/
+})
+
 app.get('/login', (req, res) => {
     res.sendFile(join(__dirname, 'resources/html/login.html'));
 });
 
+app.get('/account_overview', (req, res) => {
+    res.sendFile(join(__dirname, 'resources/html/account_overview.html'));
+})
+
 app.post('/login', async (req, res) => {
-    console.log(req.body);
     // give back a token...
     if (req.body.password === undefined || req.body.email === undefined) {
         // get screwed
@@ -340,7 +210,7 @@ app.post('/login', async (req, res) => {
     }
     const payload = req.body as LoginPayload;
     try {
-        const token = await authenticate(payload.email, payload.password);
+        const token = await authenticate(payload.email, payload.password, payload.mac);
         // send back the token
         res.status(200)
             .json(token);

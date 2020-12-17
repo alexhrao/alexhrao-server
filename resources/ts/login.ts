@@ -1,5 +1,3 @@
-console.log('hello');
-
 function setupLogin() {
     const loginBtn = document.querySelector<HTMLButtonElement>('#loginContainer button');
     const loginEmail = document.querySelector<HTMLInputElement>('#loginEmail');
@@ -74,11 +72,14 @@ function setupLogin() {
                 loginBtn.textContent = 'Login';
                 return;
             } else {
+                const token = await response.json();
                 loginErr.classList.remove('shown');
                 loginBtn.childNodes.forEach(n => n.remove());
                 const check = document.createElement('i');
                 check.classList.add('fad', 'fa-check');
                 loginBtn.appendChild(check);
+                window.sessionStorage.setItem('token', token.token as unknown as string);
+                window.location.href = 'https://alexhrao.com/account_overview';
             }
         } catch {
             loginErr.textContent = 'Invalid Login, please try again';
@@ -172,17 +173,18 @@ function setupCreate() {
                 createBtn.textContent = 'Login';
                 return;
             } else {
+                const token = await response.json();
                 createErr.classList.remove('shown');
                 createBtn.childNodes.forEach(n => n.remove());
                 const check = document.createElement('i');
                 check.classList.add('fad', 'fa-check');
                 createBtn.appendChild(check);
+                window.sessionStorage.setItem('token', token.token as unknown as string);
+                window.location.href = 'https://alexhrao.com/account_overview';
             }
         } catch {
             createErr.textContent = 'Invalid Login, please try again';
             createErr.classList.add('shown');
-            //createBtn.childNodes.forEach(n => n.remove());
-            //createBtn.textContent = 'Login';
         }
         
     }

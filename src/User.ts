@@ -1,8 +1,7 @@
 export interface SlackToken {
-    teamName: string;
-    teamID: string;
+    name: string;
+    id: string;
     token: string;
-    userID: string;
 }
 
 export interface MicrosoftToken {
@@ -13,6 +12,8 @@ export interface MicrosoftToken {
 export interface SessionToken {
     token: string;
     ttl: number;
+    mac?: string;
+    createdAt: number;
 }
 
 export type Token = SlackToken | MicrosoftToken;
@@ -59,14 +60,24 @@ export interface User {
 
 export interface LoginPayload {
     email: string;
+    mac?: string;
     password: string;
 }
 
-export interface TranscriptPayload {
-    userID: string;
+export interface AuthPayload {
     token: string;
+    email: string;
+    mac?: string;
+}
+export interface TranscriptPayload {
+    auth: AuthPayload;
     meetingName: string;
-    passcode?: string;
     events: TranscriptEvent[];
     meetingInfo: MeetingInfo;
+}
+
+export interface TokenPayload {
+    auth: AuthPayload;
+    slack?: SlackToken[];
+    outlook?: MicrosoftToken[];
 }
