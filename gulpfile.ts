@@ -1,12 +1,10 @@
+import gulp from 'gulp';
+import ts from 'gulp-typescript';
+import sass from 'gulp-sass';
+import zip from 'gulp-zip';
 
-const gulp = require('gulp');
-const ts = require('gulp-typescript');
-const sass = require('gulp-sass');
-const zip = require('gulp-zip');
-
-sass.compiler = require('node-sass');
 const tsProject = ts.createProject('tsconfig.json');
-const resourceTS = ts.createProject('resources/ts/tsconfig.json');
+const resourceTS = ts.createProject('resources/tsconfig.json');
 
 gulp.task('sass', () => {
     return gulp.src('./resources/scss/*.scss')
