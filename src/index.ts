@@ -111,13 +111,7 @@ app.get('/slack/oauth', (req, res) => {
     const code = req.query['code'] as string;
     const state = req.query['state'] as string;
     if (code === undefined || state === undefined) {
-        fs.readFile(join(__dirname, 'resources/html/slack_oauth.html'))
-        .then(b => b.toString())
-        .then(html => {
-            res.status(200)
-                .contentType('html')
-                .send(html);
-        });
+        res.sendStatus(400);
         return;
     }
     // Redirect!
