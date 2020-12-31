@@ -8,38 +8,42 @@
     <script src="https://kit.fontawesome.com/a927215a8a.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div class="body">
+    <div id="root">
       <div class="profile">
         <div class="headshot">
-          <img src="/resources/img/professional.png" >
-          <p class="title">Alexander Rao</p>
+          <div class="headshot-img">
+            <img src="/resources/img/professional.png" >
+          </div>
+          <p class="title">Alexander Rao | US Citizen</p>
         </div>
         <hr>
         <div class="contact">
           <p>I'm a software &amp; hardware developer based out of Atlanta, Georgia, with specialties in various low level computer architectures</p>
           <div class="connections">
-            <a href="https://www.linkedin.com/in/alexhrao/"><i class="fab fa-linkedin"></i></a>
-            <a href="https://github.com/alexhrao"><i class="fab fa-github"></i></a>
-            <a href="mailto:alexhrao@gmail.com"><i class="fad fa-paper-plane"></i></a>
+            <a title="LinkedIn" href="https://www.linkedin.com/in/alexhrao/"><i class="fab fa-linkedin"></i></a>
+            <a title="GitHub" href="https://github.com/alexhrao"><i class="fab fa-github"></i></a>
+            <a title="Email" href="mailto:alexhrao@gmail.com"><i class="fad fa-paper-plane"></i></a>
           </div>
         </div>
         <hr>
+
         <h2>At a Glance</h2>
         <div class="at-a-glance">
-          <div class="languages" title="MATLAB, C/C++, C#, SQL, Bash, Python, HTML/CSS, TS, JS, Verilog, Java">
+          <div class="languages" title="MATLAB, C/C++, C#, SQL, Bash, Python, HTML/CSS, TS, JS, Verilog, Java, PHP">
             <span class="big">13</span><span class="little">Programming Languages</span>
           </div>
           <div class="gpa">
-            <span class="big">3.95</span><span class="little">GPA</span>
+            <span class="big">9</span><span class="little">Internships</span>
           </div>
           <div class="teaching">
             <span class="big">4+</span><span class="little">Years Teaching</span>
           </div>
-          <div class="research">
-            <span class="big">2</span><span class="little">Research Projects</span>
+          <div class="npm">
+            <span class="big">2</span><span class="little">NPM Packages</span>
           </div>
         </div>
         <hr>
+
         <h2>Core Proficiencies</h2>
         <div class="proficiency">
           <p>Python</p>
@@ -51,7 +55,62 @@
         </div>
       </div>
       <div class="rest">
-
+        <div class="employment-history">
+          <h2>Employment History</h2>
+          <div class="section">
+            <h3>Software Engineer</h3>
+            <span class="subtitle">Cisco | May 2020</span>
+            <p class="desc">
+              I worked on Cisco's <em>Secure Boot Offering</em>, adding support for <abbr title="Leighton-Micali Signatures">LMS</abbr>, a new signature-based cryptographic signing algorithm. The software was less than 16 KiB in size and was successfully loaded onto a real Intel <abbr title="Customer Reference Board">CRB</abbr>, where it correctly parsed and verified all test signatures, and ran with favorable performance. I will be continuing full-time in August of 2021, after I complete my Master's in Electrical &amp; Computer Engineering at The Georgia Institute of Technology.
+            </p>
+          </div>
+          <div class="section">
+            <h3>Graduate Research Assistant</h3>
+            <span class="subtitle">Georgia Institute of Technology | Aug 2020 – May 2021</span>
+            <p class="desc">
+              I provided support for MATLAB-based machine learning, as applied to the growth of different semiconductor materials. In addition to base support of the image-based ML algorithms, I also provided applications to interface with the various GigE Cameras connected to the system, replacing legacy software with a far more robust solution. The resulting application provided a more responsive, and ultimately more useful, interface for the growers to use, and the ML algorithm finished with over 90% accuracy in predicting both growth quality and levels of electron mobility.
+            </p>
+          </div>
+          <div class="section">
+            <h3>Sofware Developer Intern</h3>
+            <span class="subtitle">Epic Health Systems | May 2019 – Aug 2019</span>
+            <p class="desc">
+              I provided the initial implementation of Epic's <em>Cartographer</em>, a plugin-based categorization framework that improves based on user feedback. As part of this effort, I created a system for picking, ordering, and integrating different plugins. I also created a few example plugins, ranging from exact matching to Levenshtein distances. Designed primarily as a RESTful API, I, along with several Epic UX engineers, also helped create an example frontend to showcase the API. The resulting product was able to greatly ease the categorization of over 10,000 antibiotics, with favorable speed and an extreme reduction in user error.
+            </p>
+          </div>
+          <div class="section">
+            <h3>EMS Engineer Intern</h3>
+            <span class="subtitle">Southern Company | May 2017 – Aug 2018</span>
+            <p class="desc">
+              I added a module for monitoring site device clusters across the Southeastern Seaboard power grid. This monitoring used <abbr title="Intercontrol Center Communication Protocol">ICCP</abbr> to determine what state devices were in. Additionally, we used hardware devices to convert serial data from field devices into IP packets to send along dedicated networks. This monitoring data was included in the <abbr title="Supervisory Control and Data Acquisition">SCADA</abbr> system of Southern Company, and was also continuously monitored via a Zenoss plugin.
+            </p>
+          </div>
+          <div class="section">
+            <h3>Head TA &amp; Software Development Manager</h3>
+            <span class="subtitle">Georgia Institute of Technology | Aug 2016 – May 2020</span>
+            <p class="desc">
+              I served as Head TA and Software Development Lead for CS 1371, a class teaching the fundamentals of MATLAB to engineering students. While serving in as Head TA, I instituted new assessment guidelines, and led the largest group of TAs at GT to teach over 800 students. As part of this effort, I also created a new lesson plan for the course, ensuring it stayed up to date with MATLAB fundamentals, while still accomplishing its core objectives. As Software Development Lead, I managed a team of 15 Software Developers to create course tools. Among these tools are the <a href="https://github.com/CS1371/autograder">Autograder</a>, the <a href="https://github.com/CS1371/homework-compiler">Homework Compiler</a>, and the <a href="https://github.com/CS1371/plot-checker">Plot Checker</a>. On my own, I also created the widely-used <a href="https://github.com/alexhrao/canvas-quiz-parser">Canvas Quiz Parser</a>.
+            </p>
+          </div>
+        </div>
+        <div class="projects">
+          <h2>Projects</h2>
+          <div class="section">
+            <h3>Autograder</h3>
+            <span class="subtitle">Automatically grade student submissions</span>
+              <p class="desc">The Autograder is a program, written primarily in MATLAB, that provides a one-touch solution for grading student submissions, handling the download, parsing, grading, critique, and upload processes without intervention. Heavily utilizing the Parallel Computing Toolbox, it is designed to be both performant and resilient, able to handle virtually all possible student submissions. It has many capabilities, which are documented <a href="/autograder">here</a>. The introduction of the autograder made the course, as it exists today, possible. Among other impacts, the Autograder was 100x faster than previous solutions, with no reported user or feedback errors, and has been used in production for over a year. The source code is available, and is located <a href="https://github.com/cs1371/autograder">here</a>.</p>
+          </div>
+          <div class="section">
+            <h3>Canvas Quiz Parser</h3>
+            <span class="subtitle">Download, Parse, and Generate Quiz PDFs from Canvas Quizzes</span>
+              <p class="desc">The Canvas Quiz Parser downloads quiz results from the Canvas <abbr title="Learning Management System">LMS</abbr> API, using the Quiz V1 structure. It then parses this information, which is given as a malformed CSV – great work was put into handling this incorrect syntax. It then constructs several PDFs, optionally batching them into groups for faster processing. The PDFs are optimized for upload to Gradescope, which requires the PDF format. This software allowed the course to continue to function once remote learning became required because of COVID-19, and made possible the serving of online assessment, and further made cheat detection possible, in partnership with Chegg. The source code is available, and is located <a href="https://github.com/alexhrao/canvas-quiz-parser">here</a>.</p>
+          </div>
+          <div class="section">
+            <h3>BlueJeans Bot</h3>
+            <span class="subtitle">Provides Chat and Transcript Integration with BlueJeans</span>
+              <p class="desc">Using BlueJean's undocumented Event Center, this software integrates with in-flight BlueJeans meetings. It includes integrations with Outlook for calendar access, Slack for message transferal, and allows the user to upload transcripts for private or public consumption. Written completely in TypeScript and using the Electron framework, it has seen limited deployment at the Georgia Institute of Technology. The software is available, and is located <a href="https://github.com/alexhrao/bluebot/releases/latest">here</a>.</p>
+          </div>
+        </div>
       </div>
     </div>
   </body>

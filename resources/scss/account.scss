@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+html {
+    height: 100vh;
+    color: white;
+    background: linear-gradient(#191654, #43C6AC);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.token {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+    svg {
+        margin-right: 10px;
+    }
+    .account-close {
+        font-size: 30px;
+        color: black;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        &:hover {
+            color: darkred;
+        }
+    }
+}
+
+#profileIntegrations {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+
+#passwordReset {
+    padding: 5px;
+    background-color: lightblue;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.25em;
+}
+
+#modalContainer {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #000000bb;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    #modal {
+        background-color: white;
+        border-radius: 5px;
+        padding: 30px;
+        color: black;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+        width: max-content;
+        display: flex;
+        flex-direction: column;
+        #modalCloser {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 30px;
+            color: black;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            &:hover {
+                color: darkred;
+            }
+        }
+
+        #newPassword,
+        #confirmPassword {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 5px;
+            font-size: 1.25em;
+            &.angry {
+                border: 3px solid salmon;
+            }
+        }
+
+        #sendReset {
+            margin-left: auto;
+            margin-right: auto;
+            border: none;
+            border-radius: 5px;
+            background-color: lightgreen;
+            color: black;
+            font-size: 1.25em;
+            cursor: pointer;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    }
+}
+
+#transcriptPreviews {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .card {
+        border: 2px solid white;
+        border-radius: 5px;
+        width: 200px;
+        padding: 10px;
+        margin: 10px;
+        h2 {
+            margin: 0;
+        }
+        span: {
+            font-style: italic;
+        }
+        a {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            cursor: pointer;
+            margin-top: 5px;
+            color: white;
+            font-size: 40px;
+            text-align: center;
+        }
+    }
+}

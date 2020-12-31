@@ -1,0 +1,6 @@
+You recently requested a password reset. To do so, copy the link listed below into a browser. If you did not request a password reset, feel free to ignore this email. This token will expire in one hour.
+
+{{RESET_TOKEN}}
+
+Regards,
+AlexHRao, LLC

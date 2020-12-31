@@ -2,3 +2,10 @@ node_modules
 dist
 aws.zip
 .DS_Store
+aws_credentials.json
+azure_credentials.json
+slack_credentials.json
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

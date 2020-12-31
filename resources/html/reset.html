@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF8">
+    <title>Password Reset</title>
+    <link rel="stylesheet" href="/resources/css/reset.css">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://kit.fontawesome.com/a927215a8a.js" crossorigin="anonymous"></script>
+    <script src="/resources/js/reset.js"></script>
+  </head>
+  <body>
+    <h1>Reset Password</h1>
+    <div id="emailContainer">
+      <h2>Enter your Email Below</h2>
+      <input type="email" placeholder="Email" id="email">
+      <p class="err" id="requestErr"></p>
+      <button class="btn" id="submitReset">
+        Request Password Reset
+      </button>
+    </div>
+    <div id="passwordContainer">
+      <h2>Pick a New Password</h2>
+      <input type="password" placeholder="New Password" id="newPassword">
+      <input type="password" placeholder="Confirm Password" id="confirmPassword">
+      <p class="err" id="resetErr"></p>
+      <button class="btn" id="resetPassword">
+        Reset Password
+      </button>
+    </div>
+  </body>
+</html>

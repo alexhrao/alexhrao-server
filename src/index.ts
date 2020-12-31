@@ -4,11 +4,55 @@ import { promises as fs } from 'fs';
 import fetch from 'node-fetch';
 import querystring from 'querystring';
 import bodyParser from 'body-parser';
-import { SlackCredentials } from './SlackTypes';
 import { join } from 'path';
-import { AuthPayload, LoginPayload, TokenPayload, TranscriptPayload } from './User';
-import { checkSession, authenticate, createNewUser, addTokens } from './authentication';
-import { saveTranscript, fetchTranscript, generateTranscriptFile } from './transcript';
+import {
+    AuthPayload,
+    LoginPayload,
+    TokenPayload,
+    LockPayload,
+    UnlockPayload,
+    ResetPayload,
+    ResetTokenPayload
+} from './User';
+
+import {
+    checkSession,
+    authenticate,
+    createNewUser,
+    addTokens,
+    getUser,
+    removeToken,
+    resetPassword,
+    fetchReset,
+    getAccount,
+    generateReset
+} from './authentication';
+
+import {
+    saveTranscript,
+    fetchTranscript,
+    generateTranscriptFile,
+    fetchUnlocked,
+    unlockTranscript,
+    lockTranscript,
+    deleteTranscript,
+    TranscriptPayload
+} from './transcript';
+
+import { createTransport} from 'nodemailer';
+
+const transport = getAccount('aws')
+    .then(aws => {
+        return createTransport({
+            host: aws.server,
+            port: aws.port,
+            secure: aws.port === 465,
+            auth: {
+                user: aws.username,
+                pass: aws.password,
+            },
+        });
+    });
 
 const app = express();
 
@@ -18,35 +62,34 @@ app.use('/transcripts', bodyParser.json());
 app.use('/tokens', bodyParser.json());
 app.use('/login', bodyParser.json());
 app.use('/create', bodyParser.json());
+app.use('/reset', bodyParser.json());
 
-const slackCredentials: Promise<SlackCredentials> = fs.readFile(join(__dirname, 'slack_credentials.json'))
-    .then(b => b.toString())
-    .then(s => JSON.parse(s));
+const slackCredentials = getAccount('slack');
 
 app.get('/', (_, res) => {
     // send basic
-    fs.readFile(join(__dirname, 'resources/html/index.html'))
-        .then(b => b.toString())
-        .then(html => {
-            res
-            .status(200)
-            .contentType('html')
-            .send(html)
-            .end();
-        });
+    res.status(200)
+        .contentType('html')
+        .sendFile(join(__dirname, 'resources/html/index.html'));
 });
 
-app.get('/resume.html', (_, res) => {
-    fs.readFile(join(__dirname, 'resources/html/resume.html'))
-        .then(b => b.toString())
-        .then(html => {
-            res
-            .status(200)
-            .contentType('html')
-            .send(html)
-            .end();
-        });
+app.get(['/resume.html', '/resume'], (_, res) => {
+    res.status(200)
+        .contentType('html')
+        .sendFile(join(__dirname, 'resources/html/resume.html'));
 });
+
+app.get('/autograder', (_, res) => {
+    res.status(200)
+        .contentType('html')
+        .sendFile(join(__dirname, 'resources/html/autograder.html'));
+});
+
+app.get('/favicon.ico', (_, res) => {
+    res.status(200)
+        .contentType('image/x-icon')
+        .sendFile(join(__dirname, 'resources/img/favicon.ico'));
+})
 
 app.get('/.well-known/microsoft-identity-association.json', (_, res) => {
     fs.readFile(join(__dirname, 'azure_credentials.json'))
@@ -118,14 +161,51 @@ app.post('/tokens', async (req, res) => {
     const tf = await checkSession(payload.auth);
     if (tf) {
         await addTokens(payload.auth.email, {
-            outlook: payload.outlook,
-            slack: payload.slack,
+            outlook: payload.outlook ?? [],
+            slack: payload.slack ?? [],
         });
         res.sendStatus(201);
     } else {
         res.sendStatus(403);
     }
-})
+});
+
+app.delete('/tokens', async (req, res) => {
+    if (req.headers['authorization'] === undefined || req.headers['x-user-email'] === undefined || req.query['acct_type'] === undefined || req.query['acct_name'] === undefined) {
+        res.sendStatus(400);
+        return;
+    }
+    const bearer = /(?<=Bearer ).+/;
+    if (!bearer.test(req.headers['authorization'])) {
+        res.sendStatus(401);
+        return;
+    }
+    const token = bearer.exec(req.headers['authorization'])?.[0];
+    if (token === undefined) {
+        res.sendStatus(400);
+        return;
+    }
+    const auth: AuthPayload = {
+        email: req.headers['x-user-email'] as string,
+        token,
+        mac: req.headers['x-user-mac'] as string|undefined,
+    }
+    const tf = await checkSession(auth);
+
+    if (!tf) {
+        res.sendStatus(403);
+        return;
+    }
+    if (req.query['acct_type'] === 'outlook') {
+        await removeToken(req.headers['x-user-email'] as string, 'outlook', req.query['acct_name'] as string);
+    } else if (req.query['acct_type'] === 'slack') {
+        await removeToken(req.headers['x-user-email'] as string, 'slack', req.query['acct_name'] as string);
+    } else {
+        res.sendStatus(400);
+        return;
+    }
+    res.sendStatus(204);
+});
 
 app.post('/transcripts', async (req, res) => {
     //
@@ -140,18 +220,131 @@ app.post('/transcripts', async (req, res) => {
         return;
     }
     try {
-        await saveTranscript(payload);
-    } catch {
+        if (payload.unlocked !== undefined && payload.unlocked) {
+            const token = await saveTranscript({
+                ...payload,
+                unlocked: true,
+            });
+            res.status(201)
+                .json({ token });
+            return;
+        } else {
+            await saveTranscript({
+                ...payload,
+            });
+            res.sendStatus(201);
+            return;
+        }
+    } catch (e) {
         res.sendStatus(500);
+        return;
+    }
+});
+
+app.get('/transcripts', async (req, res) => {
+    if (req.query['token'] !== undefined) {
+        try {
+            const unlocked = await fetchUnlocked(req.query['token'] as string);
+            const transcript = await fetchTranscript(unlocked);
+            res.status(200)
+                .contentType('text/plain')
+                .send(generateTranscriptFile(transcript))
+                .end();
+        } catch {
+            res.sendStatus(404);
+        }
+        return;
+    }
+    // no auth... so send the HTML. It'll be responsible for requesting
+    if (req.headers['authorization'] === undefined || req.headers['x-user-email'] === undefined) {
+        res.sendFile(join(__dirname, 'resources/html/transcript.html'));
+        return;
+    }
+    const bearer = /(?<=Bearer ).+/;
+    if (!bearer.test(req.headers['authorization'])) {
+        res.sendStatus(401);
+        return;
+    }
+    const token = bearer.exec(req.headers['authorization'])?.[0];
+    if (token === undefined) {
+        res.sendStatus(400);
+        return;
+    }
+    const auth: AuthPayload = {
+        email: req.headers['x-user-email'] as string,
+        token,
+        mac: req.headers['x-user-mac'] as string|undefined,
+    }
+    const tf = await checkSession(auth);
+    if (!tf) {
+        res.sendStatus(403);
+        return;
+    }
+    const transcriptName = req.query['meeting'];
+    const download = req.query['download'];
+    if (transcriptName === undefined) {
+        // asking for JSON of all transcripts for this user...
+        const trans = await fetchTranscript(req.headers['x-user-email'] as string);
+        const outbound = trans.map(t => {
+            return {
+                name: t.meetingName,
+                startTime: t.meetingInfo.startTime,
+                endTime: t.meetingInfo.endTime,
+                timeZone: t.meetingInfo.timeZone,
+            }
+        });
+        res.status(200).json(outbound);
+        return;
+    }
+    if (download !== undefined) {
+        try {
+            const file = await generateTranscriptFile(req.headers['x-user-email'] as string, transcriptName as string);
+            res.status(200)
+                .contentType('text/plain')
+                .send(file);
+        } catch {
+            res.sendStatus(404);
+        }
+        return;
+    }
+    try {
+        const trans = await fetchTranscript(req.headers['x-user-email'] as string, transcriptName as string);
+
+        res.status(200)
+            .json({
+                name: trans.meetingName,
+                events: trans.events,
+                info: trans.meetingInfo,
+                token: trans.token
+            });
+    } catch {
+        res.sendStatus(404);
+    }
+});
+
+app.put('/transcripts', async (req, res) => {
+    if (req.body.auth === undefined) {
+        res.sendStatus(400);
+        return;
+    }
+    if (req.body.meetingName !== undefined) {
+        const payload = req.body as UnlockPayload;
+        const out = await unlockTranscript(payload.auth.email, payload.meetingName);
+        res.status(200).send(out);
+        return;
+    } else if (req.body.token !== undefined) {
+        const payload = req.body as LockPayload;
+        await lockTranscript(payload.token);
+    } else {
+        res.sendStatus(400);
         return;
     }
     res.sendStatus(201);
 });
 
-app.get('/transcripts', async (req, res) => {
-    // no auth... so send the HTML. It'll be responsible for requesting
+app.delete('/transcripts', async (req, res) => {
     if (req.headers['authorization'] === undefined || req.headers['x-user-email'] === undefined) {
-        res.sendFile('./resources/html/transcript.html');
+        res.sendStatus(400);
         return;
     }
     const bearer = /(?<=Bearer ).+/;
@@ -166,40 +359,150 @@ app.get('/transcripts', async (req, res) => {
     }
     const transcriptName = req.query['meeting'];
     if (transcriptName === undefined) {
-        res.sendStatus(400);
+        res.sendStatus(404);
         return;
     }
     const auth: AuthPayload = {
         email: req.headers['x-user-email'] as string,
         token,
-        mac: req.headers['x-mac-address'] as string|undefined,
+        mac: req.headers['x-user-mac'] as string|undefined,
     }
+
     const tf = await checkSession(auth);
-    if (tf) {
-        // we know we're good... now look for that meeting
-        // if download, just sent the file...
-        try {
-            const file = await generateTranscriptFile(req.headers['x-user-email'] as string, transcriptName as string);
-            res.status(200)
-                .contentType('text/plain')
-                .send(file);
-        } catch {
-            res.sendStatus(404);
-        }
-        return;
-    } else {
+    if (!tf) {
         res.sendStatus(403);
         return;
     }
+    await deleteTranscript(req.headers['x-user-email'] as string, transcriptName as string);
+    res.sendStatus(204);
 })
 
 app.get('/login', (req, res) => {
     res.sendFile(join(__dirname, 'resources/html/login.html'));
 });
 
-app.get('/account_overview', (req, res) => {
-    res.sendFile(join(__dirname, 'resources/html/account_overview.html'));
-})
+app.get('/reset', async (req, res) => {
+    // if I'm given a token, check if it's valid
+    if (req.query['token'] === undefined) {
+        res.status(200)
+            .contentType('html')
+            .sendFile(join(__dirname, 'resources/html/reset.html'));
+    } else if (req.query['email'] !== undefined) {
+        // check the token...
+        const email = await fetchReset(req.query['token'] as string);
+        res
+            .status(200)
+            .cookie('email', email, {
+                sameSite: "strict",
+            })
+            .sendFile(join(__dirname, 'resources/html/reset.html'));
+    } else {
+        res.sendStatus(400);
+    }
+});
+
+app.post('/reset', async (req, res) => {
+    if (req.body.email !== undefined && req.body.password === undefined) {
+        // generate the reset:
+        // 1. Generate token
+        // 2. Send it to the email
+        // 3. Reply, say everything is ok (unless it isn't)
+        try {
+            const sender = await transport;
+            const html = await fs.readFile(join(__dirname, 'resources/html/reset_email.html')).then(b => b.toString());
+            const text = await fs.readFile(join(__dirname, 'resources/html/reset_email.txt')).then(b => b.toString());
+            const token = await generateReset(req.body.email);
+            const link = `https://alexhrao.com/reset?token=${token.token}&email=${token.email}`;
+    
+            await sender.sendMail({
+                from: 'Password Manager <alexhrao@alexhrao.com>',
+                to: req.body.email as string,
+                subject: 'Password Reset for alexhrao.com',
+                html: html.replace(/{{RESET_TOKEN}}/g, link),
+                text: text.replace(/{{RESET_TOKEN}}/g, link),
+            });
+    
+            res.sendStatus(204);
+        } catch (e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
+    } else if (req.body.password === undefined) {
+        res.sendStatus(400);
+    } else if (req.body.auth !== undefined) {
+        const payload = req.body as ResetPayload;
+        const tf = await checkSession(payload.auth);
+        if (!tf) {
+            res.sendStatus(403);
+        } else {
+            // we're good!
+            await resetPassword(payload.auth.email, payload.password);
+            res.sendStatus(204);
+        }
+    } else if (req.body.token !== undefined) {
+        const payload = req.body as ResetTokenPayload;
+        await resetPassword(payload);
+        res.sendStatus(204);
+    } else {
+        res.sendStatus(400);
+    }
+});
+
+app.get('/account', async (req, res) => {
+    if (req.headers['authorization'] === undefined || req.headers['x-user-email'] === undefined) {
+        res.sendFile(join(__dirname, 'resources/html/account.html'));
+        return;
+    }
+    const bearer = /(?<=Bearer ).+/;
+    if (!bearer.test(req.headers['authorization'])) {
+        res.sendStatus(401);
+        return;
+    }
+    const token = bearer.exec(req.headers['authorization'])?.[0];
+    if (token === undefined) {
+        res.sendStatus(400);
+        return;
+    }
+    const auth: AuthPayload = {
+        email: req.headers['x-user-email'] as string,
+        token,
+        mac: req.headers['x-user-mac'] as string|undefined,
+    };
+    const tf = await checkSession(auth);
+    if (tf) {
+        // send an account synopsis
+        const user = await getUser(req.headers['x-user-email'] as string);
+        res.status(200)
+            .json({
+                email: user.userID,
+                createdDate: user.joinDate,
+                slack: user.tokens.slack.map(st => {
+                    return {
+                        name: st.name,
+                        id: st.id,
+                    };
+                }),
+                outlook: user.tokens.outlook.map(mt => {
+                    return {
+                        name: mt.accountName,
+                    };
+                }),
+                transcripts: user.transcripts
+                    .sort((t1, t2) => t1.meetingInfo.startTime - t2.meetingInfo.startTime)
+                    .reverse()
+                    .slice(0, 10)
+                    .map(t => {
+                        return {
+                            meetingInfo: t.meetingInfo,
+                            name: t.meetingName,
+                        };
+                    }),
+            })
+    } else {
+        res.sendStatus(403);
+        return;
+    }
+});
 
 app.post('/login', async (req, res) => {
     // give back a token...

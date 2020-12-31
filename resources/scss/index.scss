@@ -1,5 +1,11 @@
 h1 {
   font-family: 'Dancing Script';
+  background: #a8ff78;  /* fallback for old browsers */
+  background: linear-gradient(to right, #0575E6, #78ffd6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: transparent;
+  background-clip: text;
+  padding-right: 5px;
+  width: fit-content;
 }
 
 #splash {
@@ -72,14 +78,17 @@ h1 {
       display: inline-block;
       border-left: 1px solid white;
       border-right: 1px solid white;
+      &:hover {
+        background-color: #232327;
+      }
 
       &:first-child {
-        border-left: none;
+        border-left: 2px solid white;
         border-top: none;
       }
       
       &:last-child {
-        border-right: none;
+        border-right: 2px solid white;
         border-bottom: none;
       }
     }

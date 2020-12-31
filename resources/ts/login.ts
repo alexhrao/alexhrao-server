@@ -1,5 +1,5 @@
 function setupLogin() {
-    const loginBtn = document.querySelector<HTMLButtonElement>('#loginContainer button');
+    const loginBtn = document.querySelector<HTMLButtonElement>('#loginBtn');
     const loginEmail = document.querySelector<HTMLInputElement>('#loginEmail');
     const loginPassword = document.querySelector<HTMLInputElement>('#loginPassword');
     const loginEmailErr = document.querySelector<HTMLParagraphElement>('#loginEmailErr');
@@ -44,7 +44,7 @@ function setupLogin() {
 
     loginPassword.onkeyup = () => checkLoginPassword();
     loginEmail.onkeyup = () => checkLoginEmail();
-    loginBtn.onclick = async () => {
+    const login = async () => {
         // check!
         if (!checkLoginEmail() || !checkLoginPassword()) {
             return;
@@ -78,8 +78,9 @@ function setupLogin() {
                 const check = document.createElement('i');
                 check.classList.add('fad', 'fa-check');
                 loginBtn.appendChild(check);
-                window.sessionStorage.setItem('token', token.token as unknown as string);
-                window.location.href = 'https://alexhrao.com/account_overview';
+                window.localStorage.setItem('token', token.token as unknown as string);
+                window.localStorage.setItem('email', loginEmail.value);
+                window.location.href = 'https://alexhrao.com/account';
             }
         } catch {
             loginErr.textContent = 'Invalid Login, please try again';
@@ -87,8 +88,9 @@ function setupLogin() {
             //loginBtn.childNodes.forEach(n => n.remove());
             //loginBtn.textContent = 'Login';
         }
-        
     }
+    loginBtn.onclick = () => login();
+    return login;
 }
 
 function setupCreate() {
@@ -145,7 +147,7 @@ function setupCreate() {
     createPassword.onkeyup = () => checkPassword();
     createConfirm.onkeyup = () => checkPassword();
     createEmail.onkeyup = () => checkEmail();
-    createBtn.onclick = async () => {
+    const creator = async () => {
         // check!
         if (!checkEmail() || !checkPassword()) {
             return;
@@ -179,16 +181,20 @@ function setupCreate() {
                 const check = document.createElement('i');
                 check.classList.add('fad', 'fa-check');
                 createBtn.appendChild(check);
-                window.sessionStorage.setItem('token', token.token as unknown as string);
-                window.location.href = 'https://alexhrao.com/account_overview';
+                window.localStorage.setItem('token', token.token as string);
+                window.localStorage.setItem('email', createEmail.value);
+                window.location.href = 'https://alexhrao.com/account';
             }
         } catch {
             createErr.textContent = 'Invalid Login, please try again';
             createErr.classList.add('shown');
         }
-        
     }
+    createBtn.onclick = () => creator();
+    return creator;
 }
+
+let isLogin = true;
 
 function setupAccountPortal() {
     const loginBtn = document.querySelector<HTMLButtonElement>('#loginPicker');
@@ -206,6 +212,7 @@ function setupAccountPortal() {
         createBtn.classList.remove('picked');
         loginContainer.classList.add('panel-shown');
         createContainer.classList.remove('panel-shown');
+        isLogin = true;
     }
     createBtn.onclick = () => {
         if (loginBtn === null || createBtn === null || loginContainer === null || createContainer === null) {
@@ -215,12 +222,21 @@ function setupAccountPortal() {
         loginBtn.classList.remove('picked');
         createContainer.classList.add('panel-shown');
         loginContainer.classList.remove('panel-shown');
+        isLogin = false;
     }
 
 }
 window.onload = () => {
-    setupLogin();
-    setupCreate();
+    const login = setupLogin();
+    const creator = setupCreate();
     setupAccountPortal();
-
+    window.onkeypress = (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            if (isLogin && login) {
+                login();
+            } else if (creator) {
+                creator();
+            }
+        }
+    }
 }

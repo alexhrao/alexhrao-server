@@ -3,8 +3,39 @@
   <head>
     <meta charset="UTF8">
     <title>Transcript</title>
+    <script src="/resources/js/transcript.js"></script>
+    <link href="/resources/css/transcript.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a927215a8a.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>Hello! We are transcripts</h1>
+    <div id="generic">
+      <h1 id="genericTitle">Your Transcripts</h1>
+      <!--
+      <div id="searchFields">
+        <input id="nameSearch" type="text">
+        <button id="searchBtn">
+          <i class="fad fa-file-search"></i>
+        </button>
+      </div>
+      -->
+      <div id="transcriptPreviews"></div>
+    </div>
+    <div id="root">
+      <div id="preamble">
+        <a id="back" title="Account Home" href="account"><i class="fad fa-house-user"></i></a>
+        <h1 id="transcriptTitle">Transcript</h1>
+      </div>
+      <div class="actions">
+        <a id="downloadTranscript" title="Download Transcript" download><i class="fad fa-download"></i></a>
+        <button id="toggleLock">
+        </button>
+        <button id="deleteTranscript" title="Delete this Transcript. Cannot be undone!">
+          <i class="fad fa-trash-alt"></i>
+        </button>
+      </div>
+      <div id="transcriptView">
+
+      </div>
+    </div>
   </body>
 </html>

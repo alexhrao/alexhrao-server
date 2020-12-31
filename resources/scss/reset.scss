@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+html {
+    height: 100vh;
+    background-color: #2a2a2e;
+    background: linear-gradient(-270deg, #38424d, #2a2a2e);
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+}
+
+#requestErr,
+#resetErr {
+    margin: 0;
+    text-align: center;
+    display: none;
+    &.happy {
+        display: block;
+        color: lightgreen;
+    }
+    &.angry {
+        display: block;
+        color: salmon;
+    }
+}
+
+input[type=email],
+input[type=password] {
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 16px;
+    &.angry {
+        border: 2px solid salmon;
+    }
+    &.happy {
+        border: 2px solid lightgreen;
+    }
+}
+
+h1,
+h2 {
+    text-align: center;
+}
+
+.btn {
+    padding: 5px;
+    font-size: 1.25em;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: lightblue;
+    width: 300px;
+    color: black;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    &.happy {
+        background-color: lightgreen;
+    }
+    &.angry {
+        background-color: salmon;
+    }
+    width: 300px;
+}
+
+#emailContainer,
+#passwordContainer {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: max-content;
+}

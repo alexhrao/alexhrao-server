@@ -1,3 +1,9 @@
+export interface SlackToken {
+    name: string;
+    id: string;
+    token: string;
+}
+
 export interface SlackUserInfo {
     ok: true;
     user: {
