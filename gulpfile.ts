@@ -38,9 +38,14 @@ gulp.task('typescript', gulp.series('app-ts', 'resource-ts'));
 
 gulp.task('html', () => {
     return gulp.src([
-        './resources/html/*.html',
-        './resources/html/*.txt',
+        './resources/html/**/*.html',
+        './resources/html/**/*.txt',
     ]).pipe(gulp.dest('dist/resources/html'));
+});
+
+gulp.task('json', () => {
+    return gulp.src('./resources/json/**/*.json')
+        .pipe(gulp.dest('dist/resources/json'));
 });
 
 gulp.task('credentials', () => {
@@ -63,7 +68,7 @@ gulp.task('aws-build', () => {
 });
 
 gulp.task('resource-watch', () => {
-    return gulp.watch('./resources/**/*.*', gulp.parallel('html', 'resource-ts', 'sass'));
+    return gulp.watch('./resources/**/*.*', gulp.parallel('html', 'resource-ts', 'sass', 'json', 'img'));
 });
 
 gulp.task('watch', gulp.series(
@@ -73,6 +78,6 @@ gulp.task('watch', gulp.series(
 );
 
 gulp.task('default', gulp.series(
-    gulp.parallel('sass', 'typescript', 'html', 'img', 'credentials', 'aws'),
+    gulp.parallel('sass', 'typescript', 'html', 'img', 'json', 'credentials', 'aws'),
     'aws-build')
 );

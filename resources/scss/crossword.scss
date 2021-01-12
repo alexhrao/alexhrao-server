@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+$font-size: 45px;
+
+h1 {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+#board {
+    display: grid;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.letterbox {
+    position: relative;
+    background-color: white;
+    border: 1px solid black;
+    width: $font-size;
+    height: $font-size;
+    font-size: $font-size;
+    &.incorrect {
+        border: 1px solid darkred;
+    }
+    &.invisible {
+        border: 1px solid transparent;
+        background-color: transparent;
+    }
+    &.filled {
+        border: 1px solid black;
+        background-color: black;
+    }
+    &.active {
+        background-color: lightblue;
+    }
+
+    input {
+        width: $font-size;
+        height: $font-size;
+        font-size: $font-size;
+        padding: 0;
+        margin: none;
+        border: none;
+        text-align: center;
+        font-family: 'Roboto Mono', monospace;
+        background-color: transparent;
+    }
+
+    span {
+        position: absolute;
+        top: 0;
+        left: 1px;
+        font-size: 9px;
+        pointer-events: none;
+    }
+}
+
+#clues {
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    h2 {
+        text-align: center;
+    }
+    border: 5px solid black;
+    border-radius: 5px;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+#clueHolder {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.clue-holder {
+    display: flex;
+    flex-direction: column;
+}
+
+#currClue  {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    display: none;
+}
+.clue-viewer {
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+    cursor: pointer;
+    span {
+        margin-right: 10px;
+        &::after {
+            content: ".";
+        }
+    }
+    p {
+        margin: 0;
+        padding: 0;
+    }
+    &.disabled {
+        p {
+            text-decoration: line-through 2px black;
+        }
+    }
+    &.selected.selected {
+        background-color: lightblue;
+    }
+}
+
+.referenced {
+    background-color: #ffec95;
+}
+
+#root {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+@media only screen
+and (max-device-width: 1200px) {
+    #root {
+        flex-direction: column;
+    }
+    #currClue {
+        display: inherit;
+    }
+}

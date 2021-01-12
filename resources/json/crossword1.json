@@ -1,0 +1,63 @@
+{
+    "name": "Test",
+    "clues": [
+        {
+            "index": 1,
+            "dir": "across",
+            "text": "Hello, ____?"
+        },
+        {
+            "index": 1,
+            "dir": "down",
+            "text": "Hello, ___LD?"
+        },
+        {
+            "index": 2,
+            "dir": "down",
+            "text": "Hello, WO__?"
+        }
+    ],
+    "board": [
+        [
+            {
+                "clue": 1,
+                "answer": "W"
+            },
+            {
+                "answer": "O"
+            },
+            {
+                "clue": 2,
+                "answer": "R"
+            },
+            {
+                "answer": "L"
+            },
+            {
+                "answer": "D"
+            }
+        ],
+        [
+            {
+                "answer": "O"
+            },
+            true,
+            {
+                "answer": "L"
+            },
+            true,
+            true
+        ],
+        [
+            {
+                "answer": "R"
+            },
+            true,
+            {
+                "answer": "R"
+            },
+            true,
+            true
+        ]
+    ]
+}

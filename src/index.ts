@@ -89,7 +89,43 @@ app.get('/favicon.ico', (_, res) => {
     res.status(200)
         .contentType('image/x-icon')
         .sendFile(join(__dirname, 'resources/img/favicon.ico'));
+});
+
+app.get('/blog', (_, res) => {
+    res.status(200)
+        .contentType('html')
+        .sendFile(join(__dirname, 'resources/html/blog.html'));
+});
+
+app.get('/blog/:post', async (req, res) => {
+    const post = req.params.post;
+    try {
+        await fs.access(join(__dirname, `resources/html/posts/${post}.html`));
+    } catch {
+        res.sendStatus(404);
+        return;
+    }
+    res.status(200)
+        .sendFile(join(__dirname, `resources/html/posts/${post}.html`));
+});
+
+app.get('/crossword', (_, res) => {
+    res.status(200)
+        .contentType('html')
+        .sendFile(join(__dirname, 'resources/html/crossword.html'));
 })
+
+app.get('/crossword/:game', async (req, res) => {
+    try {
+        await fs.access(join(__dirname, `resources/json/${req.params.game}.json`));
+    } catch {
+        res.sendStatus(404);
+        return;
+    }
+    res.status(200)
+        .contentType('json')
+        .sendFile(join(__dirname, `resources/json/${req.params.game}.json`))
+});
 
 app.get('/.well-known/microsoft-identity-association.json', (_, res) => {
     fs.readFile(join(__dirname, 'azure_credentials.json'))
@@ -183,7 +219,7 @@ app.delete('/tokens', async (req, res) => {
         email: req.headers['x-user-email'] as string,
         token,
         mac: req.headers['x-user-mac'] as string|undefined,
-    }
+    };
     const tf = await checkSession(auth);
 
     if (!tf) {
@@ -268,7 +304,7 @@ app.get('/transcripts', async (req, res) => {
         email: req.headers['x-user-email'] as string,
         token,
         mac: req.headers['x-user-mac'] as string|undefined,
-    }
+    };
     const tf = await checkSession(auth);
     if (!tf) {
         res.sendStatus(403);
@@ -285,7 +321,7 @@ app.get('/transcripts', async (req, res) => {
                 startTime: t.meetingInfo.startTime,
                 endTime: t.meetingInfo.endTime,
                 timeZone: t.meetingInfo.timeZone,
-            }
+            };
         });
         res.status(200).json(outbound);
         return;
@@ -360,7 +396,7 @@ app.delete('/transcripts', async (req, res) => {
         email: req.headers['x-user-email'] as string,
         token,
         mac: req.headers['x-user-mac'] as string|undefined,
-    }
+    };
 
     const tf = await checkSession(auth);
     if (!tf) {
@@ -371,7 +407,7 @@ app.delete('/transcripts', async (req, res) => {
     res.sendStatus(204);
 })
 
-app.get('/login', (req, res) => {
+app.get('/login', (_, res) => {
     res.sendFile(join(__dirname, 'resources/html/login.html'));
 });
 
@@ -491,7 +527,7 @@ app.get('/account', async (req, res) => {
                             name: t.meetingName,
                         };
                     }),
-            })
+            });
     } else {
         res.sendStatus(403);
         return;
@@ -530,7 +566,7 @@ app.post('/create', async (req, res) => {
     } catch {
         res.sendStatus(500);
     }
-})
+});
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Listening on port ${process.env.PORT || 3000}`);

@@ -1,0 +1,407 @@
+{
+    "name": "Linnea's Game",
+    "clues": [
+        {
+            "index": 1,
+            "dir": "across",
+            "text": "Some of the pics we've sent?"
+        },
+        {
+            "index": 1,
+            "dir": "down",
+            "text": "What you make me"
+        },
+        {
+            "index": 2,
+            "dir": "across",
+            "text": "The _Actual_ Peach State"
+        },
+        {
+            "index": 3,
+            "dir": "down",
+            "text": "Runner?"
+        },
+        {
+            "index": 4,
+            "dir": "across",
+            "text": "Yeehaw"
+        },
+        {
+            "index": 5,
+            "dir": "down",
+            "text": "Our first Meme"
+        },
+        {
+            "index": 6,
+            "dir": "across",
+            "text": "Three Hour Difference?"
+        },
+        {
+            "index": 7,
+            "dir": "across",
+            "text": "The first thing we'll do :))"
+        },
+        {
+            "index": 8,
+            "dir": "down",
+            "text": "A special word used to describe you ;)"
+        },
+        {
+            "index": 9,
+            "dir": "down",
+            "text": "The Best UC (according to me)"
+        },
+        {
+            "index": 10,
+            "dir": "across",
+            "text": "4 Across, but for you",
+            "references": [
+                {
+                    "dir": "across",
+                    "index": 4
+                }
+            ]
+        },
+        {
+            "index": 11,
+            "dir": "across",
+            "text": "Good ____ and Good Night"
+        },
+        {
+            "index": 12,
+            "dir": "down",
+            "text": "Smart Nickname"
+        },
+        {
+            "index": 13,
+            "dir": "down",
+            "text": "Helluva Engineer!"
+        },
+        {
+            "index": 14,
+            "dir": "across",
+            "text": "Sweet _____, Princess"
+        }
+    ],
+    "board": [
+        [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            {
+                "clue": 1,
+                "answer": "H"
+            },
+            {
+                "answer": "O"
+            },
+            {
+                "answer": "T"
+            }
+        ],
+        [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            {
+                "clue": 2,
+                "answer": "C"
+            },
+            {
+                "answer": "A"
+            },
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            {
+                "clue": 3,
+                "answer": "J"
+            },
+            false,
+            false,
+            false,
+            false,
+            {
+                "answer": "P"
+            },
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            {
+                "clue": 3,
+                "answer": "J"
+            },
+            false,
+            false,
+            false,
+            false,
+            {
+                "answer": "P"
+            },
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            {
+                "clue": 4,
+                "answer": "C"
+            },
+            {
+                "answer": "O"
+            },
+            {
+                "answer": "W"
+            },
+            {
+                "clue": 5,
+                "answer": "B"
+            },
+            {
+                "answer": "O"
+            },
+            {
+                "answer": "Y"
+            },
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            {
+                "answer": "K"
+            },
+            false,
+            false,
+            {
+                "answer": "I"
+            },
+            false,
+            false,
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            false,
+            false,
+            false,
+            {
+                "clue": 6,
+                "answer": "G"
+            },
+            {
+                "answer": "A"
+            },
+            false,
+            false,
+            false
+        ],
+        [
+            {
+                "clue": 7,
+                "answer": "H"
+            },
+            {
+                "answer": "U"
+            },
+            {
+                "clue": 8,
+                "answer": "G"
+            },
+            false,
+            false,
+            {
+                "answer": "M"
+            },
+            false,
+            {
+                "clue": 9,
+                "answer": "U"
+            },
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            {
+                "answer": "O"
+            },
+            false,
+            false,
+            {
+                "answer": "A"
+            },
+            false,
+            {
+                "answer": "C"
+            },
+            false,
+            false
+        ],
+        [
+            false,
+            {
+                "clue": 10,
+                "answer": "P"
+            },
+            {
+                "answer": "R"
+            },
+            {
+                "answer": "I"
+            },
+            {
+                "answer": "N"
+            },
+            {
+                "answer": "C"
+            },
+            {
+                "answer": "E"
+            },
+            {
+                "answer": "S"
+            },
+            {
+                "answer": "S"
+            },
+            false
+        ],
+        [
+            false,
+            false,
+            {
+                "answer": "G"
+            },
+            false,
+            false,
+            false,
+            false,
+            {
+                "answer": "D"
+            },
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            {
+                "answer": "E"
+            },
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        [
+            false,
+            {
+                "clue": 11,
+                "answer": "M"
+            },
+            {
+                "answer": "O"
+            },
+            {
+                "answer": "R"
+            },
+            {
+                "clue": 12,
+                "answer": "N"
+            },
+            {
+                "answer": "I"
+            },
+            {
+                "answer": "N"
+            },
+            {
+                "clue": 13,
+                "answer": "G"
+            },
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            {
+                "answer": "U"
+            },
+            false,
+            {
+                "answer": "E"
+            },
+            false,
+            false,
+            {
+                "answer": "T"
+            },
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            {
+                "answer": "S"
+            },
+            false,
+            {
+                "answer": "R"
+            },
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            false,
+            false,
+            {
+                "clue": 14,
+                "answer": "D"
+            },
+            {
+                "answer": "R"
+            },
+            {
+                "answer": "E"
+            },
+            {
+                "answer": "A"
+            },
+            {
+                "answer": "M"
+            },
+            {
+                "answer": "S"
+            }
+        ]
+    ]
+}

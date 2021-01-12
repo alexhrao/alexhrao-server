@@ -1,0 +1,143 @@
+{
+    "name": "First NYT Mini, by Joel Fagliano",
+    "clues": [
+        {
+            "index": 1,
+            "dir": "down",
+            "text": "Creature capable of 270-degree head rotation"
+        },
+        {
+            "index": 2,
+            "dir": "across",
+            "text": "Unruly head of hair"
+        },
+        {
+            "index": 2,
+            "dir": "down",
+            "text": "Dahl's \"Fantastic\" title character"
+        },
+        {
+            "index": 3,
+            "dir": "down",
+            "text": "Gemstone for most Libras"
+        },
+        {
+            "index": 4,
+            "dir": "across",
+            "text": "Kind of speed, in \"Star Trek\""
+        },
+        {
+            "index": 5,
+            "dir": "down",
+            "text": "Firing Range Rounds"
+        },
+        {
+            "index": 6,
+            "dir": "across",
+            "text": "Pop duo with the 2011 #1 hit \"Party Rock Anthem\""
+        },
+        {
+            "index": 7,
+            "dir": "down",
+            "text": "Like all prime numbers but one"
+        },
+        {
+            "index": 8,
+            "dir": "across",
+            "text": "Growth on old bread"
+        },
+        {
+            "index": 9,
+            "dir": "across",
+            "text": "UPS Store purchase"
+        }
+    ],
+    "board": [
+        [
+            {
+                "clue": 1,
+                "answer": "O"
+            },
+            false,
+            {
+                "clue": 2,
+                "answer": "M"
+            },
+            {
+                "clue": 3,
+                "answer": "O"
+            },
+            {
+                "answer": "P"
+            }
+        ],
+        [
+            {
+                "clue": 4,
+                "answer": "W"
+            },
+            {
+                "clue": 5,
+                "answer": "A"
+            },
+            {
+                "answer": "R"
+            },
+            {
+                "answer": "P"
+            },
+            false
+        ],
+        [
+            {
+                "clue": 6,
+                "answer": "L"
+            },
+            {
+                "answer": "M"
+            },
+            {
+                "answer": "F"
+            },
+            {
+                "answer": "A"
+            },
+            {
+                "clue": 7,
+                "answer": "O"
+            }
+        ],
+        [
+            false,
+            {
+                "clue": 8,
+                "answer": "M"
+            },
+            {
+                "answer": "O"
+            },
+            {
+                "answer": "L"
+            },
+            {
+                "answer": "D"
+            }
+        ],
+        [
+            {
+                "clue": 9,
+                "answer": "B"
+            },
+            {
+                "answer": "O"
+            },
+            {
+                "answer": "X"
+            },
+            false,
+            {
+                "answer": "D"
+            }
+        ]
+    ]
+}

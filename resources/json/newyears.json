@@ -1,0 +1,482 @@
+{
+    "name": "New Year's Resolutions",
+    "clues": [
+        {
+            "index": 1,
+            "dir": "across",
+            "text": "Perhaps make new ones, but keep the old"
+        },
+        {
+            "index": 1,
+            "dir": "down",
+            "text": "Call your Mom"
+        },
+        {
+            "index": 2,
+            "dir": "across",
+            "text": "Move into the new year. Also helpful with 5 Across",
+            "references": [
+                {
+                    "index": 5,
+                    "dir": "across"
+                }
+            ]
+        },
+        {
+            "index": 3,
+            "dir": "down",
+            "text": "What you're invariably doing right now"
+        },
+        {
+            "index": 4,
+            "dir": "across",
+            "text": "Spick and Span"
+        },
+        {
+            "index": 5,
+            "dir": "across",
+            "text": "Probably the most infamous New Year's Resolution"
+        },
+        {
+            "index": 6,
+            "dir": "down",
+            "text": "Everything in it's place"
+        },
+        {
+            "index": 7,
+            "dir": "across",
+            "text": "We don't really know why we need this"
+        },
+        {
+            "index": 8,
+            "dir": "down",
+            "text": "Melania's Tag Line"
+        },
+        {
+            "index": 9,
+            "dir": "down",
+            "text": "A specific type of resolution that can help with 5 Across",
+            "references": [
+                {
+                    "index": 5,
+                    "dir": "across"
+                }
+            ]
+        },
+        {
+            "index": 10,
+            "dir": "down",
+            "text": "Perhaps the most popular resolution about stopping something"
+        },
+        {
+            "index": 11,
+            "dir": "across",
+            "text": "Root of all Evil, perhaps"
+        },
+        {
+            "index": 12,
+            "dir": "down",
+            "text": "Perhaps the one thing nobody in the world could reliably do in 2020"
+        }
+    ],
+    "board": [
+        [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            {
+                "clue": 8,
+                "answer": "B"
+            },
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            false,
+            {
+                "clue": 7,
+                "answer": "S"
+            },
+            {
+                "answer": "L"
+            },
+            {
+                "answer": "E"
+            },
+            {
+                "answer": "E"
+            },
+            {
+                "answer": "P"
+            },
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            {
+                "answer": "B"
+            },
+            false,
+            {
+                "clue": 9,
+                "answer": "K"
+            },
+            false,
+            false,
+            false,
+            false,
+            {
+                "clue": 12,
+                "answer": "T"
+            },
+            false
+        ],
+        [
+            false,
+            false,
+            false,
+            false,
+            {
+                "clue": 6,
+                "answer": "O"
+            },
+            false,
+            {
+                "answer": "E"
+            },
+            false,
+            {
+                "answer": "E"
+            },
+            false,
+            false,
+            false,
+            false,
+            {
+                "answer": "R"
+            },
+            false
+        ],
+        [
+            false,
+            false,
+            false,
+            false,
+            {
+                "answer": "R"
+            },
+            false,
+            {
+                "answer": "S"
+            },
+            false,
+            {
+                "answer": "T"
+            },
+            false,
+            false,
+            false,
+            false,
+            {
+                "answer": "A"
+            },
+            false
+        ],
+        [
+            false,
+            {
+                "clue": 5,
+                "answer": "W"
+            },
+            {
+                "answer": "E"
+            },
+            {
+                "answer": "I"
+            },
+            {
+                "answer": "G"
+            },
+            {
+                "answer": "H"
+            },
+            {
+                "answer": "T"
+            },
+            {
+                "answer": "L"
+            },
+            {
+                "answer": "O"
+            },
+            {
+                "answer": "S"
+            },
+            {
+                "clue": 10,
+                "answer": "I"
+            },
+            false,
+            false,
+            {
+                "answer": "V"
+            },
+            false
+        ],
+        [
+            false,
+            false,
+            false,
+            false,
+            {
+                "answer": "A"
+            },
+            false,
+            false,
+            false,
+            {
+                "answer": "D"
+            },
+            false,
+            {
+                "clue": 11,
+                "answer": "M"
+            },
+            {
+                "answer": "O"
+            },
+            {
+                "answer": "N"
+            },
+            {
+                "answer": "E"
+            },
+            {
+                "answer": "Y"
+            }
+        ],
+        [
+            {
+                "clue": 1,
+                "answer": "F"
+            },
+            {
+                "answer": "R"
+            },
+            {
+                "answer": "I"
+            },
+            {
+                "answer": "E"
+            },
+            {
+                "answer": "N"
+            },
+            {
+                "answer": "D"
+            },
+            {
+                "answer": "S"
+            },
+            false,
+            {
+                "answer": "I"
+            },
+            false,
+            {
+                "answer": "O"
+            },
+            false,
+            false,
+            {
+                "answer": "L"
+            },
+            false
+        ],
+        [
+            {
+                "answer": "A"
+            },
+            false,
+            false,
+            false,
+            {
+                "answer": "I"
+            },
+            false,
+            false,
+            false,
+            {
+                "answer": "E"
+            },
+            false,
+            {
+                "answer": "K"
+            },
+            false,
+            false,
+            false,
+            false
+        ],
+        [
+            {
+                "answer": "M"
+            },
+            false,
+            false,
+            false,
+            {
+                "answer": "Z"
+            },
+            false,
+            false,
+            false,
+            {
+                "answer": "T"
+            },
+            false,
+            {
+                "answer": "I"
+            },
+            false,
+            false,
+            false,
+            false
+        ],
+        [
+            {
+                "answer": "I"
+            },
+            false,
+            {
+                "clue": 2,
+                "answer": "E"
+            },
+            {
+                "answer": "X"
+            },
+            {
+                "answer": "E"
+            },
+            {
+                "clue": 3,
+                "answer": "R"
+            },
+            {
+                "answer": "C"
+            },
+            {
+                "answer": "I"
+            },
+            {
+                "answer": "S"
+            },
+            {
+                "answer": "I"
+            },
+            {
+                "answer": "N"
+            },
+            {
+                "answer": "G"
+            },
+            false,
+            false,
+            false
+        ],
+        [
+            {
+                "answer": "L"
+            },
+            false,
+            false,
+            false,
+            false,
+            {
+                "answer": "E"
+            },
+            false,
+            false,
+            false,
+            false,
+            {
+                "answer": "G"
+            },
+            false,
+            false,
+            false,
+            false
+        ],
+        [
+            {
+                "answer": "Y"
+            },
+            false,
+            {
+                "clue": 4,
+                "answer": "C"
+            },
+            {
+                "answer": "L"
+            },
+            {
+                "answer": "E"
+            },
+            {
+                "answer": "A"
+            },
+            {
+                "answer": "N"
+            },
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            false,
+            false,
+            false,
+            {
+                "answer": "D"
+            },
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+        ]
+    ]
+}
