@@ -13,7 +13,11 @@ h1 {
     margin-left: auto;
     margin-right: auto;
 }
-
+#clueAndOptions {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
 .letterbox {
     position: relative;
     background-color: white;
@@ -21,8 +25,12 @@ h1 {
     width: $font-size;
     height: $font-size;
     font-size: $font-size;
+    &.active {
+        background-color: lightblue;
+    }
     &.incorrect {
         border: 1px solid darkred;
+        background-color: rgb(255, 208, 203);
     }
     &.invisible {
         border: 1px solid transparent;
@@ -31,9 +39,6 @@ h1 {
     &.filled {
         border: 1px solid black;
         background-color: black;
-    }
-    &.active {
-        background-color: lightblue;
     }
 
     input {
@@ -84,6 +89,45 @@ h1 {
     flex-direction: column;
 }
 
+#options {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    button {
+        font-size: 20px;
+        cursor: pointer;
+        padding: 10px;
+        border: none;
+        font-family: 'Open Sans', sans-serif;
+        border-top: 2px solid black;
+        border-bottom: 2px solid black;
+        border-right: 1px solid black;
+        border-left: 1px solid black;
+        &:hover {
+            background-color: lightblue;
+        }
+        &:first-child {
+            border-left: 2px solid black;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+        &:last-child {
+            border-right: 2px solid black;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+    }
+}
+
+#confettiCanvas {
+    display: block;
+    z-index: 1;
+    pointer-events: none;
+    position: fixed;
+    top: 0
+}
+
 #currClue  {
     width: fit-content;
     margin-left: auto;
@@ -95,6 +139,10 @@ h1 {
     display: flex;
     flex-direction: row;
     padding: 15px;
+    background-color: #f0f0f0;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border-radius: 5px;
     cursor: pointer;
     span {
         margin-right: 10px;
@@ -111,7 +159,7 @@ h1 {
             text-decoration: line-through 2px black;
         }
     }
-    &.selected.selected {
+    &.selected {
         background-color: lightblue;
     }
 }
@@ -124,13 +172,11 @@ h1 {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    flex-wrap: wrap;
 }
 
 @media only screen
 and (max-device-width: 1200px) {
-    #root {
-        flex-direction: column;
-    }
     #currClue {
         display: inherit;
     }
