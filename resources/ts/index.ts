@@ -120,7 +120,6 @@ const confettiSetup = () => {
             document.body.prepend(canvas);
             canvas.width = innerWidth;
             canvas.height = innerHeight;
-            console.log(innerHeight);
             window.addEventListener("resize", () => {
                 innerWidth = document.documentElement.scrollWidth;
                 innerHeight = document.documentElement.scrollHeight
