@@ -43,7 +43,7 @@ const confettiSetup = () => {
         isPaused: isConfettiPaused,     //call and returns true or false depending on whether the confetti animation is paused
         isRunning: isConfettiRunning	    //call and returns true or false depending on whether the animation is running
     };
-    const supportsAnimationFrame = window.requestAnimationFrame ?? window.webkitRequestAnimationFrame;
+    const supportsAnimationFrame = (window.requestAnimationFrame ?? window.webkitRequestAnimationFrame) !== undefined;
     const colors = ["rgba(30,144,255,", "rgba(107,142,35,", "rgba(255,215,0,", "rgba(255,192,203,", "rgba(106,90,205,", "rgba(173,216,230,", "rgba(238,130,238,", "rgba(152,251,152,", "rgba(70,130,180,", "rgba(244,164,96,", "rgba(210,105,30,", "rgba(220,20,60,"];
     let streamingConfetti = false;
     let pause = false;
@@ -100,7 +100,7 @@ const confettiSetup = () => {
                 drawParticles(context);
                 lastFrameTime = now - (delta % confetti.frameInterval);
             }
-            requestAnimationFrame(runAnimation);
+            window.requestAnimationFrame(runAnimation);
         }
     }
 
@@ -229,9 +229,20 @@ const confettiSetup = () => {
 };
 
 window.onload = () => {
-    const img = document.getElementsByTagName('img')[0];
+    const img = document.querySelector('img');
+    const hello = document.querySelector('h1');
+    if (img === null || hello === null) {
+        return;
+    }
     const confetti = confettiSetup();
     img.onclick = () => {
-        confetti.start();
+        hello.classList.toggle('moved');
+        if (confetti.isRunning()) {
+            confetti.maxCount += (confetti.maxCount > 500 ? 0 : 100);
+            confetti.stop();
+            confetti.start();
+        } else {
+            confetti.start();
+        }
     }
 }

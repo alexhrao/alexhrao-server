@@ -6,6 +6,12 @@ h1 {
   background-clip: text;
   padding-right: 5px;
   width: fit-content;
+  transition-property: background-position-x;
+  transition-duration: 1s;
+  background-position-x: 0px;
+  &.moved {
+    background-position-x: 435px;
+  }
 }
 
 #splash {
