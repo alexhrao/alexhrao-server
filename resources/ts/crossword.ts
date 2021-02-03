@@ -174,6 +174,7 @@ interface ClueDict {
 }
 
 window.onload = async () => {
+    const audio = new Audio('./resources/audio/finished.mp3');
     const gameID = new URLSearchParams(window.location.search).get('game') ?? 'crossword1';
     const game = await retreiveGame(gameID);
     if (game === undefined) {
@@ -315,7 +316,11 @@ window.onload = async () => {
         liveClues[dir][index].viewer.classList.add('disabled');
         liveClues[dir][index].clue.done = true;
         if (!confetti.isRunning() && puzzleCheck(false)) {
-            confetti.start();
+            audio.play()
+                .then(() => setTimeout(() => {
+                    confetti.start();
+                    setTimeout(() => confetti.stop(), 5000);
+                }, 1500));
         }
     }
     function lookupClue(lb: LiveBox): ClueLookup;
@@ -777,6 +782,7 @@ function setupConfetti() {
         frameInterval: 15,  //the confetti animation frame interval in milliseconds
         alpha: 1.0,         //the alpha opacity of the confetti (between 0 and 1, where 1 is opaque and 0 is invisible)
         gradient: false,    //whether to use gradients for the confetti particles
+        isHeart: false,
         start: startConfetti,        //call to start confetti animation (with optional timeout in milliseconds, and optional min and max random confetti count)
         stop: stopConfetti,         //call to stop adding confetti
         toggle: toggleConfetti,       //call to start or stop the confetti animation depending on whether it's already running

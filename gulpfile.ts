@@ -40,12 +40,18 @@ gulp.task('html', () => {
     return gulp.src([
         './resources/html/**/*.html',
         './resources/html/**/*.txt',
+        './resources/html/**/*.pdf',
     ]).pipe(gulp.dest('dist/resources/html'));
 });
 
 gulp.task('json', () => {
     return gulp.src('./resources/json/**/*.json')
         .pipe(gulp.dest('dist/resources/json'));
+});
+
+gulp.task('audio', () => {
+    return gulp.src('./resources/audio/**/*.mp3')
+        .pipe(gulp.dest('dist/resources/audio'));
 });
 
 gulp.task('credentials', () => {
@@ -68,16 +74,16 @@ gulp.task('aws-build', () => {
 });
 
 gulp.task('resource-watch', () => {
-    return gulp.watch('./resources/**/*.*', gulp.parallel('html', 'resource-ts', 'sass', 'json', 'img'));
+    return gulp.watch('./resources/**/*.*', gulp.parallel('html', 'resource-ts', 'sass', 'json', 'img', 'audio'));
 });
 
 gulp.task('watch', gulp.series(
-    gulp.parallel('sass', 'typescript', 'html', 'img', 'credentials', 'aws'),
+    gulp.parallel('sass', 'typescript', 'html', 'img', 'credentials', 'audio', 'aws'),
     'aws-build',
     'resource-watch')
 );
 
 gulp.task('default', gulp.series(
-    gulp.parallel('sass', 'typescript', 'html', 'img', 'json', 'credentials', 'aws'),
+    gulp.parallel('sass', 'typescript', 'html', 'audio', 'img', 'json', 'credentials', 'aws'),
     'aws-build')
 );

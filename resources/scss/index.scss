@@ -12,6 +12,14 @@ h1 {
   &.moved {
     background-position-x: 435px;
   }
+  &.linnea,
+  &.linnea.moved {
+    background-position: 0px;
+    background: #ED213A;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #93291E, #ED213A);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #93291E, #ED213A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background-clip: text;
+  }
 }
 
 #splash {
@@ -68,7 +76,8 @@ h1 {
   margin-left: auto;
   margin-right: auto;
   translate: 0px -24px;
-
+  position: relative;
+  z-index: 2;
   & > ul {
     display: flex;
     flex-direction: row;
@@ -123,6 +132,9 @@ h1 {
   margin-left: auto;
   margin-right: auto;
 }
+#plan {
+  display: none;
+}
 
 .about-section {
   display: flex;
@@ -131,7 +143,6 @@ h1 {
   align-items: center;
   padding-top: 10px;
   padding-bottom: 10px;
-
   & > p {
     margin-left: 10px;
   }
@@ -141,7 +152,22 @@ h1 {
     height: 100px;
     font-size: xx-large;
   }
-
+  &.linnea {
+    z-index: 2;
+    background-color: #232327;
+    position: relative;
+    &:nth-child(2n),
+    &:nth-child(2n-1) {
+      & > .about-icon {
+        order: 1;
+        padding-right: 20px;
+        padding-left: 0;
+      }
+      & > p {
+        order: 2;
+      }
+    }
+  }
   &:nth-child(2n-1) {
     & > .about-icon {
       order: 1;
