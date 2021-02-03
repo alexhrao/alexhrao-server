@@ -35,6 +35,51 @@ interface Changer {
     (key: string): unknown;
 }
 
+interface Heart {
+    x: number;
+    y: number;
+    color: string;
+}
+const colors = ['red', 'blue', 'rebeccapurple', 'coral', 'firebrick'];
+const hearts: Heart[] = [];
+function drawHeart(ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, color: string) {
+    ctx.save();
+    ctx.beginPath();
+    const topCurveHeight = height * 0.3;
+    ctx.moveTo(x, y + topCurveHeight);
+    // top left curve
+    ctx.bezierCurveTo(
+      x, y, 
+      x - width / 2, y, 
+      x - width / 2, y + topCurveHeight
+    );
+  
+    // bottom left curve
+    ctx.bezierCurveTo(
+      x - width / 2, y + (height + topCurveHeight) / 2, 
+      x, y + (height + topCurveHeight) / 2, 
+      x, y + height
+    );
+  
+    // bottom right curve
+    ctx.bezierCurveTo(
+      x, y + (height + topCurveHeight) / 2, 
+      x + width / 2, y + (height + topCurveHeight) / 2, 
+      x + width / 2, y + topCurveHeight
+    );
+  
+    // top right curve
+    ctx.bezierCurveTo(
+      x + width / 2, y, 
+      x, y, 
+      x, y + topCurveHeight
+    );
+  
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.restore();
+}
 const confettiSetup = () => {
     const confetti: Confetti = {
         maxCount: 150,      //set max confetti count
@@ -216,47 +261,11 @@ const confettiSetup = () => {
                 context.lineTo(x2, y2);
                 context.stroke();
             }
-        })
+        });
+        hearts.forEach(heart => {
+            drawHeart(context, heart.x, heart.y - 30, 60, 60, heart.color);
+        });
     }
-
-    function drawHeart(ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, color: string) {
-        ctx.save();
-        ctx.beginPath();
-        const topCurveHeight = height * 0.3;
-        ctx.moveTo(x, y + topCurveHeight);
-        // top left curve
-        ctx.bezierCurveTo(
-          x, y, 
-          x - width / 2, y, 
-          x - width / 2, y + topCurveHeight
-        );
-      
-        // bottom left curve
-        ctx.bezierCurveTo(
-          x - width / 2, y + (height + topCurveHeight) / 2, 
-          x, y + (height + topCurveHeight) / 2, 
-          x, y + height
-        );
-      
-        // bottom right curve
-        ctx.bezierCurveTo(
-          x, y + (height + topCurveHeight) / 2, 
-          x + width / 2, y + (height + topCurveHeight) / 2, 
-          x + width / 2, y + topCurveHeight
-        );
-      
-        // top right curve
-        ctx.bezierCurveTo(
-          x + width / 2, y, 
-          x, y, 
-          x, y + topCurveHeight
-        );
-      
-        ctx.closePath();
-        ctx.fillStyle = color;
-        ctx.fill();
-        ctx.restore();
-      }
 
     function updateParticles() {
         waveAngle += 0.01;
@@ -358,20 +367,21 @@ const stages: { [key: string]: Riddle } = {
         blurb: `One thing I really value is communication. I really appreciate how I always feel safe to bring something up with you, even if it's not comfortable. I know I can trust us, which gives any hard conversation a strong foundation to end well. Of course, it should be obvious that I immensely enjoy talking to you. Every morning, Every night... Like I said, talking to you is always something I will look forward to.`,
     },
 };
-
+const audio = new Audio('./resources/audio/vote_results.mp3');
 const changers: Changer[] = [];
 window.onload = () => {
     const img = document.querySelector('img');
     const hello = document.querySelector('h1');
     const navBarList = document.querySelector<HTMLUListElement>('#navBar ul');
-    const audio = new Audio('./resources/audio/vote_results.mp3');
     audio.loop = true;
     if (img === null || hello === null || navBarList === null) {
         return;
     }
     confetti = confettiSetup();
     img.onclick = () => {
-        if (hello.classList.contains('moved')) {
+        if (stages.linnea.stage === -1) {
+            audio.pause();
+        } else if (hello.classList.contains('moved')) {
             audio.pause();
         } else {
             audio.play();
@@ -505,6 +515,44 @@ function openYourWorld() {
         plan.classList.add('linnea', 'about-section');
         sectionHolder.appendChild(plan);
     }
+    {
+        const movieLink = document.createElement('a');
+        movieLink.href = 'https://docs.google.com/document/d/1gSxFdSrdByr7G_WG9tI2tcSzsGy39L-sK0Z7-umKyB0/edit?usp=sharing';
+        movieLink.textContent = 'Movie List';
+        const li = document.createElement('li');
+        li.appendChild(movieLink);
+        navBarList.appendChild(li);
+    }
+    {
+        const player = document.createElement('a');
+        const linneaAudio = new Audio(vendorFlag ? './resources/audio/wonderful.mp3' : './resources/audio/gallery.mp3');
+        linneaAudio.loop = true;
+        player.href = "#";
+        const icon = document.createElement('i');
+        icon.classList.add('fal', 'fa-play');
+        player.appendChild(icon);
+        player.onclick = async e => {
+            // if paused, play... otherwise, 
+            e.stopPropagation();
+            if (linneaAudio.paused) {
+                await linneaAudio.play();
+                [...player.children].forEach(c => c.remove());
+                const icon = document.createElement('i');
+                icon.classList.add('fal', 'fa-pause');
+                player.appendChild(icon);
+            } else {
+                linneaAudio.pause();
+                [...player.children].forEach(c => c.remove());
+                const icon = document.createElement('i');
+                icon.classList.add('fal', 'fa-play');
+                player.appendChild(icon);
+            }
+        }
+        audio.pause();
+        const li = document.createElement('li');
+        li.appendChild(player);
+        navBarList.appendChild(li);
+    }
     document.querySelectorAll('footer').forEach(e => e.remove());
     changers.push(...Object.keys(stages)
         .sort((s1, s2) => stages[s1].order - stages[s2].order)
@@ -539,11 +587,24 @@ function openYourWorld() {
             return stageChanger(k, onComplete);
     }));
 }
-
+let colorInd = -1;
 function linneaIntro() {
     const intro = document.querySelector<HTMLParagraphElement>('#splashIntro p');
     if (intro === null) {
         return;
     }
     intro.textContent = `Hey there babe, I like you a lot. In fact, I like you ${confetti.maxCount} hearts worth! The rest of the website may have changed, maybe you should take a look :))`;
+    if (colorInd === -1) {
+        window.onclick = (e: MouseEvent) => {
+            hearts.push({
+                x: e.clientX,
+                y: e.clientY,
+                color: colors[colorInd++],
+            });
+            if (colorInd === colors.length) {
+                colorInd = 0;
+            }
+        }
+        colorInd = 0;
+    }
 }
