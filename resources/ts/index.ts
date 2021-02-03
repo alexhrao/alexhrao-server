@@ -142,10 +142,21 @@ const confettiSetup = () => {
     }
 
     function runAnimation() {
+        hearts.forEach(heart => {
+            if (context !== null) {
+                drawHeart(context, heart.x, heart.y - 30, 60, 60, heart.color);
+            }
+        });
         if (pause) {
             return;
         } else if (particles.length === 0) {
             context?.clearRect(0, 0, innerWidth, innerHeight);
+            hearts.forEach(heart => {
+                if (context !== null) {
+                    drawHeart(context, heart.x, heart.y - 30, 60, 60, heart.color);
+                }
+            });
+            window.requestAnimationFrame(runAnimation);
         } else {
             const now = Date.now();
             const delta = now - lastFrameTime;
@@ -597,8 +608,8 @@ function linneaIntro() {
     if (colorInd === -1) {
         window.onclick = (e: MouseEvent) => {
             hearts.push({
-                x: e.clientX,
-                y: e.clientY,
+                x: e.screenX,
+                y: e.screenY,
                 color: colors[colorInd++],
             });
             if (colorInd === colors.length) {
