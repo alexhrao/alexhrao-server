@@ -304,6 +304,7 @@ const confettiSetup = () => {
 
 let confetti: Confetti;
 const vendorFlag = false;
+const dateFlag = false;
 const stages: { [key: string]: Riddle } = {
     linnea: {
         order: -1,
@@ -377,6 +378,24 @@ const stages: { [key: string]: Riddle } = {
         riddle: 'Time to Talk',
         blurb: `One thing I really value is communication. I really appreciate how I always feel safe to bring something up with you, even if it's not comfortable. I know I can trust us, which gives any hard conversation a strong foundation to end well. Of course, it should be obvious that I immensely enjoy talking to you. Every morning, Every night... Like I said, talking to you is always something I will look forward to.`,
     },
+    lofi: {
+        order: 10,
+        stage: 0,
+        riddle: 'My "Weird" Music Playlist',
+        blurb: `I have really enjoyed getting to know you. Music taste is, of course, but a small part of someone. With that being said, it's something that is clearly important to you, and so it is to me too! Even though my selection of music might be "weird" (Lofi anybody?), I appreciate that you at least give it a chance. Like I said, I've thoroughly enjoyed getting to know you so far, and it seems like you've enjoyed getting to know me too. I can't wait to learn all the little things about you that make you, well, the Linnea I know and cherish`,
+    },
+    movies: {
+        order: 11,
+        stage: 0,
+        riddle: 'My List for you Consists of?',
+        blurb: `Linnea, I enjoy spending time with you, no matter what we're doing. Whether it's watching a movie, or walking, or stretching, or just plain old talking, being with you is by far my favorite place to be. You are considerate, caring, and above all, you're fun! It's infectious (am I allowed to use that word?), and I can never stay frustrated with you for very long. Whether it's this website, or that very first list of movies, I'll never grow tired of making things for you, however frivolous they may be ;)`,
+    },
+    italian: {
+        order: 12,
+        stage: 0,
+        riddle: 'The Most Romantic of Foods',
+        blurb: `Babe, I really want to take you out on a date. Not just a date to the movies; a real, romantic, genuine date. Why? Because I like you; because it'll be fun; but most importantly, because you deserve it. You deserve a man that understands how lucky he is, and shows it any chance he can. You deserve someone who treasures you, who enjoys your company, and who always shows you how amazing you are. Someone who lifts you up and holds you there. I like you so much, Linnea, and I can't wait to be this for you.`,
+    }
 };
 const audio = new Audio('./resources/audio/vote_results.mp3');
 const changers: Changer[] = [];
@@ -518,7 +537,7 @@ function openYourWorld() {
         li.appendChild(solitaireLink);
         navBarList.appendChild(li);
     }
-    {
+    if (dateFlag) {
         const plan = document.querySelector<HTMLDivElement>('#plan')!;
         if (vendorFlag) {
             plan.style.display = 'block';
