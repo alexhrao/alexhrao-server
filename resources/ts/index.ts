@@ -482,7 +482,7 @@ function openYourWorld() {
     // Add controls
     {
         const rose = document.createElement('a');
-        rose.href = 'https://github.com/alexhrao/rose-garden/releases/download/v1.0.0/dists.zip';
+        rose.href = 'https://github.com/alexhrao/rose-garden/releases/download/v1.1.0/dists.zip';
         rose.download = 'roses.zip';
         rose.textContent = 'Pickup your Rose';
         const li = document.createElement('li');
@@ -608,8 +608,8 @@ function linneaIntro() {
     if (colorInd === -1) {
         window.onclick = (e: MouseEvent) => {
             hearts.push({
-                x: e.screenX,
-                y: e.screenY,
+                x: e.pageX,
+                y: e.pageY,
                 color: colors[colorInd++],
             });
             if (colorInd === colors.length) {
