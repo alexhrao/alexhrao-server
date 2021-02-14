@@ -186,14 +186,16 @@ const confettiSetup = () => {
             document.body.prepend(canvas);
             canvas.width = innerWidth;
             canvas.height = innerHeight;
-            window.addEventListener("resize", () => {
+            const sizer = () => {
                 innerWidth = document.documentElement.scrollWidth;
                 innerHeight = document.documentElement.scrollHeight
                 if (canvas !== null) {
                     canvas.width = innerWidth;
                     canvas.height = innerHeight;
                 }
-            }, true);
+            };
+            window.addEventListener('resize', sizer, true);
+            window.setInterval(sizer, 1000);
             context = canvas.getContext("2d");
         } else if (context === null) {
             context = canvas.getContext("2d");
@@ -301,9 +303,8 @@ const confettiSetup = () => {
 
     return confetti;
 };
-
 let confetti: Confetti;
-const vendorFlag = false;
+const vendorFlag = true;
 const dateFlag = false;
 const stages: { [key: string]: Riddle } = {
     linnea: {
@@ -328,7 +329,7 @@ const stages: { [key: string]: Riddle } = {
         order: 1,
         stage: 0,
         riddle: 'A Word Specifically for You',
-        blurb: `Babe, you are beautiful. I could never put it into words, but that won't stop me from trying. Linnea, your hair is absolutely stunning, and you know I love the way you move it around. You have such deep and distracting eyes, especially when you're winking. You have such an amazing voice, although I must say I'm looking forward to taking your breath away. You're gorgeous, babe; talk to me if you want to hear more...`,
+        blurb: `Babe, you are beautiful. I could never put it into words, but that won't stop me from trying. Linnea, your hair is absolutely stunning, and you know I love the way you move it around. You have such deep and distracting eyes, especially when you're winking. You have such an amazing voice, although I must say I'm looking forward to taking your breath away. You're gorgeous, babe.`,
     },
     cowboy: {
         order: 2,
@@ -340,7 +341,7 @@ const stages: { [key: string]: Riddle } = {
         order: 3,
         stage: 0,
         riddle: 'The Month of a Truly Special Date',
-        blurb: `Somehow, we've only been dating for a little under three months. And yet... I feel like it's been so much longer. Each month I look back and am in awe by how much further we've come together. We've seen our share of challenges, and risen above all of them. I trust you, a lot. And it means the world that you feel the same about me`,
+        blurb: `Somehow, we've only been dating for a little under three months. And yet... I feel like it's been so much longer. Each month I look back and am in awe by how much further we've come together. We've seen our share of challenges, and risen above them all. I trust you, a lot. And it means the world that you feel the same about me`,
     },
     snuggle: {
         order: 4,
@@ -352,7 +353,7 @@ const stages: { [key: string]: Riddle } = {
         order: 5,
         stage: 0,
         riddle: 'Mmmmmmmmm',
-        blurb: `Linnea, one of my favorite things to do is to make you smile. In fact, I hope you're doing that right now! When you smile, your whole face lights up and you look beautiful. Lucky for me, it would appear that I'm actually pretty good at this! But, just for the record: No matter what is going on in my life at any given moment... A smile from you always makes me happy :))`,
+        blurb: `Linnea, one of my favorite things to do is to make you smile. In fact, I hope you're doing that right now! When you smile, your whole face lights up and you look beautiful. Lucky for me, it would appear that I'm actually pretty good at this! But, just for the record: No matter what is going on in my life at any given moment... A smile from you always makes it better :))`,
     },
     reddit: {
         order: 6,
@@ -364,7 +365,7 @@ const stages: { [key: string]: Riddle } = {
         order: 7,
         stage: 0,
         riddle: 'Hmmmmmmmm... Hmmmmmmmmmmmmmmm...',
-        blurb: `One of my favorite things about you, Linnea, is your voice. I can hear the emotion in a way that's impossible to glean from a simple text. I actually get to hear your happiness! (which of course in turn makes me happy :))) And it should go without saying, I don't talk to many people, but I'll always find time to talk to you, no matter what`,
+        blurb: `One of my favorite things about you, Linnea, is your voice. I can hear the emotion in a way that's impossible to glean from a simple text. I actually get to feel your happiness, which of course in turn makes me happy :)). And it should go without saying, I don't talk to many people, but I'll always find time to talk to you, no matter what`,
     },
     graveyard: {
         order: 8,
@@ -376,7 +377,7 @@ const stages: { [key: string]: Riddle } = {
         order: 9,
         stage: 0,
         riddle: 'Time to Talk',
-        blurb: `One thing I really value is communication. I really appreciate how I always feel safe to bring something up with you, even if it's not comfortable. I know I can trust us, which gives any hard conversation a strong foundation to end well. Of course, it should be obvious that I immensely enjoy talking to you. Every morning, Every night... Like I said, talking to you is always something I will look forward to.`,
+        blurb: `One thing I really value is communication. I really appreciate how I always feel safe to bring something up with you, even if it's not comfortable. I know I can trust us, which gives any hard conversation a strong foundation to end well. Of course, it should be obvious that I immensely enjoy talking to you. Every morning, every night... Like I said, talking to you is always something I will look forward to.`,
     },
     lofi: {
         order: 10,
@@ -394,11 +395,31 @@ const stages: { [key: string]: Riddle } = {
         order: 12,
         stage: 0,
         riddle: 'The Most Romantic of Foods',
-        blurb: `Babe, I really want to take you out on a date. Not just a date to the movies; a real, romantic, genuine date. Why? Because I like you; because it'll be fun; but most importantly, because you deserve it. You deserve a man that understands how lucky he is, and shows it any chance he can. You deserve someone who treasures you, who enjoys your company, and who always shows you how amazing you are. Someone who lifts you up and holds you there. I like you so much, Linnea, and I can't wait to be this for you.`,
-    }
+        blurb: `Babe, I really want to take you out on a date. Not just a date to the movies; a real, romantic, genuine date. Why? Because I like you; because it'll be fun; but most importantly, because you deserve it. You deserve a man that understands how lucky he is, and shows it at every chance he gets. You deserve someone who treasures you, who enjoys your company, and who always shows you how amazing you are. Someone who lifts you up and holds you there. I like you so much, Linnea, and I can't wait to be this for you.`,
+    },
+    trademark: {
+        order: 13,
+        stage: 0,
+        riddle: 'The Big Sad*, I Know Things*, a Good Day*',
+        blurb: `I want you to do me a Favor™; I want you to go look in the mirror. I want you to try and see what I see. When I look at you, I see a capable, strong person who's ready and willing to take on the world. I see a gorgeous woman who cares more about others than she does about herself. I see passion, generosity, integrity. I see someone any guy would be lucky to date, let alone be in a relationship with. When I look into your eyes Linnea, I'm looking into the eyes of someone I'm beyond grateful to be with. So look in the mirror, and you just might see it to.`,
+    },
+    gruszynski: {
+        order: 14,
+        stage: 0,
+        riddle: 'School Therapy Dog',
+        blurb: `Honestly, I thought this one was the hardest -- I really had to sit and think for a long time. But I like this story because it's real, and it reminds me of how wonderful it is to talk to you. Looking back on all our conversations, one thing is clear - I've literally never talked to anyone this much, and I've never enjoyed talking to anyone this much before either. And, while there are so many reasons now that make you uniquely special to me... This one is the first, and it is the one I most treasure. I couldn't imagine a better partner to talk with, whether it's Serious or just for fun; flirting or just shooting the breeze; words of joy or words of sorrow; no matter what you're talking about, I want to be there and I want to listen. I'm looking forward to many, many more times where I get to do just that!`
+    },
+    good: {
+        order: 15,
+        stage: 0,
+        riddle: 'Are we...?',
+        blurb: `Linnea. On this site I’ve talked about a lot of things. I’ve discussed how beautiful you are, how passionate you are, how much I like you. I’ve mentioned how great it is to talk to you, how you’re often the best of my day. What I see in you is what I want to see in myself; care, integrity, honesty, affection, and compassion, just to name a few. But those traits don’t only come out when the sun’s out; sometimes we have conflict, which unfortunately is inevitable in any committed relationship. But here’s what’s critical - you don’t leave it. Communication is absolutely essential to any healthy relationship, and it goes double for one that’s long distance. In that regard, I have no better partner than you, Linnea. You never duck from a serious conversation that we need to have. I appreciate that you don’t hold grudges, and that you’re quick to admit when you’ve made the mistake while remaining gracious when the roles are reversed. I’ve never felt like there’s something I can’t tell you about, and I cannot overstate how important that is to me. I wanted to end on this one because, of everything I’ve said, this is the most important. I like you, I cherish our relationship, and I’m looking forward to exploring whatever the future holds for us. The beautiful memories we have made, and the beautiful ones yet to be formed, are possible because of how freely we can discuss anything that comes to mind. Because of that, I'm beyond optimistic about us, and I'm glad you are too.`,
+    },
 };
+
 const audio = new Audio('./resources/audio/vote_results.mp3');
 const changers: Changer[] = [];
+
 window.onload = () => {
     const img = document.querySelector('img');
     const hello = document.querySelector('h1');
@@ -408,7 +429,25 @@ window.onload = () => {
         return;
     }
     confetti = confettiSetup();
-    img.onclick = () => {
+    /*
+    const world = document.querySelector<HTMLDivElement>('.about-section:last-child div');
+    if (world === null) {
+        return;
+    }
+    world.onclick = () => {
+        linneaChanger('l');
+        linneaChanger('i');
+        linneaChanger('n');
+        linneaChanger('n');
+        linneaChanger('e');
+        linneaChanger('a');
+        holmChanger('h');
+        holmChanger('o');
+        holmChanger('l');
+        holmChanger('m');
+    }
+    */
+    img.onclick = (e: MouseEvent) => {
         if (stages.linnea.stage === -1) {
             audio.pause();
         } else if (hello.classList.contains('moved')) {
@@ -418,12 +457,13 @@ window.onload = () => {
         }
         hello.classList.toggle('moved');
         if (confetti.isRunning()) {
-            confetti.maxCount += (confetti.maxCount > 500 ? 0 : 100);
-            confetti.stop();
-            if (confetti.maxCount < 500) {
-                confetti.start();
+            confetti.maxCount += 100;
+            if (confetti.maxCount > 550) {
+                confetti.maxCount = 150;
             }
-        } else {
+            confetti.stop();
+            confetti.start();
+        } else if (stages.holm.stage !== -1) {
             confetti.start();
         }
         if (stages.linnea.stage === -1) {
@@ -457,6 +497,19 @@ window.onload = () => {
             changers.forEach(f => f(ev.key));
         }
     }
+    const heart = document.querySelector<HTMLAnchorElement>('#passwordMarker');
+    if (heart === null) {
+        return;
+    }
+    heart.onclick = e => {
+        e.stopPropagation();
+        const pass = document.createElement('input');
+        pass.type = 'text';
+        pass.id = 'password';
+        pass.placeholder = 'Secret Code...'
+        heart.parentElement?.appendChild(pass);
+        heart.remove();
+    }
 }
 
 function stageChanger(str: string & keyof typeof stages, onComplete: () => unknown): (key: string) => void {
@@ -465,15 +518,15 @@ function stageChanger(str: string & keyof typeof stages, onComplete: () => unkno
             return;
         }
         const k = key.toLowerCase();
-        if (/\s+/.test(key)) {
+        if (/\s+/.test(k)) {
             return;
         }
         // otherwise... check the next one
-        if (str[stages[str].stage] === key) {
+        if (str[stages[str].stage] === k) {
             stages[str].stage++;
         } else {
             stages[str].stage = 0;
-            if (str[stages[str].stage] === key) {
+            if (str[stages[str].stage] === k) {
                 stages[str].stage++;
             }
         }
@@ -554,10 +607,10 @@ function openYourWorld() {
         navBarList.appendChild(li);
     }
     {
-        const player = document.createElement('a');
-        const linneaAudio = new Audio(vendorFlag ? './resources/audio/wonderful.mp3' : './resources/audio/gallery.mp3');
+        const player = document.createElement('button');
+        const linneaAudio = new Audio( dateFlag ? './resources/audio/wonderful.mp3' :
+                                    vendorFlag ? './resources/audio/piano.mp3' : './resources/audio/gallery.mp3');
         linneaAudio.loop = true;
-        player.href = "#";
         const icon = document.createElement('i');
         icon.classList.add('fal', 'fa-play');
         player.appendChild(icon);
@@ -582,6 +635,41 @@ function openYourWorld() {
         const li = document.createElement('li');
         li.appendChild(player);
         navBarList.appendChild(li);
+    }
+    {
+        const heart = document.createElement('button');
+        const icon = document.createElement('i');
+        icon.classList.add('fal', 'fa-heart');
+        heart.appendChild(icon);
+        heart.onclick = e => {
+            e.stopPropagation();
+            // if running, stop, if stopped, run
+            [...heart.children].forEach(c => c.remove());
+            const icon = document.createElement('i');
+            if (confetti.isRunning()) {
+                icon.classList.add('fal', 'fa-heart');
+                confetti.stop();
+            } else {
+                icon.classList.add('fal', 'fa-heartbeat');
+                confetti.start();
+            }
+            heart.appendChild(icon);
+        }
+        confetti.stop();
+        const li = document.createElement('li');
+        li.appendChild(heart);
+        navBarList.appendChild(li);
+    }
+    if (vendorFlag) {
+        const valentine = document.querySelector<HTMLDivElement>('#valentineDay')!;
+        const blurb = valentine.querySelector<HTMLParagraphElement>('p')!;
+        blurb.onclick = () => {
+            const list = valentine.querySelector<HTMLUListElement>('ul');
+            list?.classList.add('shown');
+        }
+        valentine.style.display = 'block';
+        valentine.classList.add('linnea', 'about-section');
+        sectionHolder.appendChild(valentine);
     }
     document.querySelectorAll('footer').forEach(e => e.remove());
     changers.push(...Object.keys(stages)
