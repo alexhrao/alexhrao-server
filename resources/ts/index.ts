@@ -711,6 +711,11 @@ function linneaIntro() {
     if (intro === null) {
         return;
     }
+    const img = document.querySelector<HTMLImageElement>('img');
+    if (img === null) {
+        return;
+    }
+    img.src = '/resources/img/alexrose.jpg';
     intro.textContent = `Hey there babe, I like you a lot. In fact, I like you ${confetti.maxCount} hearts worth! The rest of the website may have changed, maybe you should take a look :))`;
     if (colorInd === -1) {
         window.onclick = (e: MouseEvent) => {
