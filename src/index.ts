@@ -1,9 +1,8 @@
-import express from 'express';
+import express, { json } from 'express';
 import staticServer from 'serve-static';
 import { promises as fs } from 'fs';
 import fetch from 'node-fetch';
 import querystring from 'querystring';
-import bodyParser from 'body-parser';
 import { join } from 'path';
 import {
     AuthPayload,
@@ -57,12 +56,12 @@ const transport = getAccount('aws')
 const app = express();
 
 app.use('/resources', staticServer(join(__dirname, './resources/')));
-app.use('/slack/events', bodyParser.json());
-app.use('/transcripts', bodyParser.json());
-app.use('/tokens', bodyParser.json());
-app.use('/login', bodyParser.json());
-app.use('/create', bodyParser.json());
-app.use('/reset', bodyParser.json());
+app.use('/slack/events', json());
+app.use('/transcripts', json());
+app.use('/tokens', json());
+app.use('/login', json());
+app.use('/create', json());
+app.use('/reset', json());
 
 const slackCredentials = getAccount('slack');
 
@@ -72,6 +71,26 @@ app.get('/', (_, res) => {
         .contentType('html')
         .sendFile(join(__dirname, 'resources/html/index.html'));
 });
+
+app.get('/readflix', async (req, res) => {
+    if (req.query['paid'] !== undefined) {
+        const sender = await transport;
+
+        const html = `<!DOCTYPE html><html><head></head><body><h1>READFLIX ${req.query['paid'] === 'true' ? 'PAID' : 'FREE'}</h1></body></html>`;
+        const text = `Got a READFLIX Hit! ${req.query['paid'] === 'true' ? 'PAID' : 'FREE'}`;
+        res.sendStatus(200);
+        await sender.sendMail({
+            from: 'Password Manager <alexhrao@alexhrao.com>',
+            to: ['alexhrao@gmail.com', 'salonioswal98@gmail.com'],
+            subject: 'READFLIX HIT',
+            html, text
+        });
+    } else {
+        res.status(200)
+            .contentType('html')
+            .sendFile(join(__dirname, 'resources/html/readflix.html'));
+    }
+})
 
 app.get(['/resume.html', '/resume'], (_, res) => {
     res.status(200)

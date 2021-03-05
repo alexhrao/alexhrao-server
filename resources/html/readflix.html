@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script>
+      window.onload = () => {
+        const freeBtn = document.querySelector('#free button');
+        const paidBtn = document.querySelector('#paid button');
+
+        
+        freeBtn.onclick = () => {
+          freeBtn.textContent = 'Uploading...';
+          const changer = () => {
+            window.setTimeout(() => {
+              freeBtn.textContent = 'Upload Error... Sorry!';
+            }, 5000);
+          }
+          fetch('https://alexhrao.com/readflix?paid=false')
+            .then(() => {
+              freeBtn.onclick = null;
+              changer();
+            })
+            .catch(() => {
+              freeBtn.onclick = null;
+              changer();
+            });
+        };
+
+        paidBtn.onclick = () => {
+          paidBtn.textContent = 'Uploading...';
+          const changer = () => {
+            window.setTimeout(() => {
+              paidBtn.textContent = 'Upload Error... Sorry!';
+            }, 5000);
+          }
+          fetch('https://alexhrao.com/readflix?paid=true')
+            .then(() => {
+              paidBtn.onclick = null;
+              changer();
+            })
+            .catch(() => {
+              paidBtn.onclick = null;
+              changer();
+            });
+        };
+      }
+    </script>
+    <style>
+      h1 {
+        font-size: 4em;
+      }
+      #free,
+      #paid {
+        border: 3px solid black;
+        border-radius: 5px;
+        padding: 5px;
+        margin: 5px;
+        width: 500px;
+      }
+      #choices button {
+        width: 90%;
+        background-color: lightgreen;
+        color: black;
+        font-size: 16px;
+        cursor: pointer;
+        border: 1px solid black;
+        border-radius: 5px;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+      }
+      #choices {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="/resources/img/readflix.jpg">
+    <h1>Upload your work to ReadFlix!</h1>
+    <input type="file">
+    <div id="choices">
+      <div id="free">
+        <p>
+          Upload your work, free of charge, but there won't be any active advertising for it!
+        </p>
+        <button>
+          Upload
+        </button>
+      </div>
+      <div id="paid">
+        <p>
+          Upload your work and we'll take it from there, with personalized active advertising. Don't have a billing account? No worries, upload here and you'll be allowed to setup billing next!
+        </p>
+        <button>
+          Upload
+        </button>
+      </div>
+    </div>
+    <img src="/resources/img/books.jpg">
+  </body>
+</html>
