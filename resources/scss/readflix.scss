@@ -1,0 +1,49 @@
+.book-row {
+    padding: 10px;
+    border: 4px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    width: 768px;
+    margin: 20px;
+    img {
+        border: none;
+        border-radius: 5px;
+        margin: 10px;
+        width: 256px;
+    }
+    &:hover {
+        background-color: rgb(189, 189, 189);
+    }
+}
+
+#bookRecords {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#logo {
+    max-width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.book-reader {
+    height: 85vh;
+    border-bottom: 2px solid black;
+}
+
+button {
+    font-size: 16px;
+    padding: 10px;
+    background-color: lightgreen;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+    cursor: pointer;
+}

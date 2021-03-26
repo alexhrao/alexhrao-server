@@ -5,7 +5,9 @@
       "ts/transcript.ts",
       "ts/account.ts",
       "ts/reset.ts",
-      "ts/crossword.ts"
+      "ts/crossword.ts",
+      "ts/readflix.ts",
+      "ts/writeflix.ts"
     ],
     "compilerOptions": {
       /* Visit https://aka.ms/tsconfig.json to read more about this file */

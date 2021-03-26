@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>ReadFlix Authorship</title>
+    <link href="/resources/css/writeflix.css" rel="stylesheet" type="text/css">
+    <script src="/resources/js/writeflix.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <div id="titleBar">
+        <img id="logo" src="/resources/img/readflix.jpg"/>
+      </div>
+      <h1>Have a story you want to share?</h1>
+      <p class="subtitle">Join the newest platform for publishing free works</p>
+      <p>Here at ReadFlix, we are dedicated to showcasing the best of our community, whether that be local or across the world. We would be honored to feature your work on our front page; keep in mind as of now, we only support English work.</p>
+      <p>Upload your work here and our moderation team will review it and send you an email when it has been published!</p>
+      <form action="/readflix/books" method="POST" enctype="multipart/form-data">
+        <input type="email" required placeholder="Email Address" name="email">
+        <input type="file" name="pdf" required accept="application/pdf">
+        <button type="submit" id="uploadBtn">
+          Upload for Review!
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,4 +1,5 @@
 import express, { json } from 'express';
+import multer from 'multer';
 import staticServer from 'serve-static';
 import { promises as fs } from 'fs';
 import fetch from 'node-fetch';
@@ -38,6 +39,8 @@ import {
     TranscriptPayload
 } from './transcript';
 
+import { getBooks, addSnap } from './books';
+
 import { createTransport} from 'nodemailer';
 
 const transport = getAccount('aws')
@@ -62,6 +65,10 @@ app.use('/tokens', json());
 app.use('/login', json());
 app.use('/create', json());
 app.use('/reset', json());
+const memStorage = multer.memoryStorage();
+const fileManager = multer({
+    storage: memStorage,
+});
 
 const slackCredentials = getAccount('slack');
 
@@ -586,6 +593,78 @@ app.post('/create', async (req, res) => {
         res.sendStatus(500);
     }
 });
+
+app.get('/readflix/books', async (req, res) => {
+    if (req.query['book'] !== undefined) {
+        // if we have a start & end time... check it
+        // if we have a recommended_from... check it
+        if (req.query['duration'] !== undefined) {
+            // send an email with the duration
+            const text = `TIME SPENT: ${req.query['duration']}ms to choose ${req.query['book']}`;
+            const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body><h1>${text}</h1></body></html>`;
+            const sender = await transport;
+            res.sendStatus(200);
+            await sender.sendMail({
+                from: 'READFLIX <alexhrao@alexhrao.com>',
+                to: ['alexhrao@gmail.com', 'salonioswal98@gmail.com'],
+                subject: 'READFLIX: TIME SPENT',
+                html, text
+            });
+        }
+        if (req.query['from'] !== undefined) {
+            const text = `Recommend: ${req.query['from']} -> ${req.query['book']}`;
+            const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body><h1>${text}</h1></body></html>`;
+            const sender = await transport;
+            res.sendStatus(200);
+            await sender.sendMail({
+                from: 'READFLIX <alexhrao@alexhrao.com>',
+                to: ['alexhrao@gmail.com', 'salonioswal98@gmail.com'],
+                subject: 'READFLIX: REC',
+                html, text
+            });
+        }
+        res.sendStatus(200);
+    } else {
+        getBooks().then(books => {
+            res.status(200).json(books);
+        });
+    }
+});
+
+app.get('/writeflix', (req, res) => {
+    res.status(200)
+        .contentType('html')
+        .sendFile(join(__dirname, 'resources/html/writeflix.html'));
+})
+
+app.patch('/readflix/books', async (req, res) => {
+    if (req.query['book'] === undefined) {
+        res.sendStatus(400);
+    } else {
+        await addSnap(req.query['book'] as string);
+        res.sendStatus(200);
+    }
+});
+
+app.post('/readflix/books', fileManager.single('pdf'), async (req, res) => {
+    const text = `New Submission from ${req.body['email'] as string}`;
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body><h1>${text}</h1></body></html>`;
+    const sender = await transport;
+    await sender.sendMail({
+        from: 'READFLIX <alexhrao@alexhrao.com>',
+        to: ['alexhrao@gmail.com', 'salonioswal98@gmail.com'],
+        subject: 'READFLIX: SUB',
+        html, text,
+        attachments: [
+            {
+                filename: 'user_submission.pdf',
+                content: req.file.buffer,
+            }
+        ]
+    });
+    res.sendStatus(200);
+});
+
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Listening on port ${process.env.PORT || 3000}`);

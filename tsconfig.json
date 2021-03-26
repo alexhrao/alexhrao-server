@@ -5,7 +5,8 @@
     "src/dynamo.ts",
     "src/SlackTypes.ts",
     "src/transcript.ts",
-    "src/User.ts"
+    "src/User.ts",
+    "src/books.ts",
   ],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */

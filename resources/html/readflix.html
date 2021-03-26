@@ -2,103 +2,28 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <script>
-      window.onload = () => {
-        const freeBtn = document.querySelector('#free button');
-        const paidBtn = document.querySelector('#paid button');
-
-        
-        freeBtn.onclick = () => {
-          freeBtn.textContent = 'Uploading...';
-          const changer = () => {
-            window.setTimeout(() => {
-              freeBtn.textContent = 'Upload Error... Sorry!';
-            }, 5000);
-          }
-          fetch('https://alexhrao.com/readflix?paid=false')
-            .then(() => {
-              freeBtn.onclick = null;
-              changer();
-            })
-            .catch(() => {
-              freeBtn.onclick = null;
-              changer();
-            });
-        };
-
-        paidBtn.onclick = () => {
-          paidBtn.textContent = 'Uploading...';
-          const changer = () => {
-            window.setTimeout(() => {
-              paidBtn.textContent = 'Upload Error... Sorry!';
-            }, 5000);
-          }
-          fetch('https://alexhrao.com/readflix?paid=true')
-            .then(() => {
-              paidBtn.onclick = null;
-              changer();
-            })
-            .catch(() => {
-              paidBtn.onclick = null;
-              changer();
-            });
-        };
-      }
-    </script>
-    <style>
-      h1 {
-        font-size: 4em;
-      }
-      #free,
-      #paid {
-        border: 3px solid black;
-        border-radius: 5px;
-        padding: 5px;
-        margin: 5px;
-        width: 500px;
-      }
-      #choices button {
-        width: 90%;
-        background-color: lightgreen;
-        color: black;
-        font-size: 16px;
-        cursor: pointer;
-        border: 1px solid black;
-        border-radius: 5px;
-        text-align: center;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-      }
-      #choices {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-    </style>
+    <title>ReadFlix</title>
+    <link href="/resources/css/readflix.css" rel="stylesheet" type="text/css">
+    <script src="/resources/js/readflix.js"></script>
   </head>
   <body>
-    <img src="/resources/img/readflix.jpg">
-    <h1>Upload your work to ReadFlix!</h1>
-    <input type="file">
-    <div id="choices">
-      <div id="free">
-        <p>
-          Upload your work, free of charge, but there won't be any active advertising for it!
-        </p>
-        <button>
-          Upload
-        </button>
+    <div id="root">
+      <div id="titleBar">
+        <img id="logo" src="/resources/img/readflix.jpg"/>
       </div>
-      <div id="paid">
-        <p>
-          Upload your work and we'll take it from there, with personalized active advertising. Don't have a billing account? No worries, upload here and you'll be allowed to setup billing next!
-        </p>
-        <button>
-          Upload
-        </button>
+      <div id="viewer">
       </div>
+      <div id="bookRecords">
+      </div>
+      <hr />
+      <p>Have a story you want to share? We’d love to showcase it on Readflix! Upload it here and our moderation team will review your work and send you an email when the review process is completed and your work is uploaded!</p>
+      <form action="/readflix/books" method="POST" enctype="multipart/form-data">
+        <input type="email" required placeholder="Email Address" name="email">
+        <input type="file" name="pdf" required accept="application/pdf">
+        <button type="submit" id="uploadBtn">
+          Upload for Review!
+        </button>
+      </form>
     </div>
-    <img src="/resources/img/books.jpg">
   </body>
 </html>
