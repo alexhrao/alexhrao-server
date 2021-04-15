@@ -415,6 +415,42 @@ const stages: { [key: string]: Riddle } = {
         riddle: 'Are we...?',
         blurb: `Linnea. On this site I’ve talked about a lot of things. I’ve discussed how beautiful you are, how passionate you are, how much I like you. I’ve mentioned how great it is to talk to you, how you’re often the best of my day. What I see in you is what I want to see in myself; care, integrity, honesty, affection, and compassion, just to name a few. But those traits don’t only come out when the sun’s out; sometimes we have conflict, which unfortunately is inevitable in any committed relationship. But here’s what’s critical - you don’t leave it. Communication is absolutely essential to any healthy relationship, and it goes double for one that’s long distance. In that regard, I have no better partner than you, Linnea. You never duck from a serious conversation that we need to have. I appreciate that you don’t hold grudges, and that you’re quick to admit when you’ve made the mistake while remaining gracious when the roles are reversed. I’ve never felt like there’s something I can’t tell you about, and I cannot overstate how important that is to me. I wanted to end on this one because, of everything I’ve said, this is the most important. I like you, I cherish our relationship, and I’m looking forward to exploring whatever the future holds for us. The beautiful memories we have made, and the beautiful ones yet to be formed, are possible because of how freely we can discuss anything that comes to mind. Because of that, I'm beyond optimistic about us, and I'm glad you are too.`,
     },
+    excited: {
+        order: 16,
+        stage: 0,
+        riddle: "I'm so _____ to see you!",
+        blurb: `Linnea, I'll keep it short, but I am so excited to see you. Holding your hand, hugging you, hearing your real voice and looking into your eyes. I can't wait to spend time with you, real, quality time with you; no matter what we're doing, as long as we're together, I'll be happy. I know you're nervous; so am I! I'm nervous because of how much I care about you, about us. Our relationship is the best relationship I have ever had, and I really mean that. With you I feel comfortable being myself. Weird, quirky, awkward, flawed, and 100% devoted to you; you accept all of it, and I cannot tell you how meaningful that is to me.`,
+    },
+    care: {
+        order: 17,
+        stage: 0,
+        riddle: "Above all Linnea, I ____ about you",
+        blurb: `I care _so much_ about you Linnea, about us. I've alluded to it before, but I'll say it as many times as you'd like: you're the best, babe. You're my best friend, my favorite person, and the only one I can trust with anything and everything. I'm so, so happy that my best friend is also my Significant Other. You're sweet, kind, considerate, genuine, authentic, lovely, honest, diligent, smart, and above all, you're a *good person*. I'm not sure I've ever really felt how I feel about you and us now, and I have to say, I love this feeling. So yeah, I care about you so much baby, and I can't help but try to show it every chance I get.`
+    },
+    heart: {
+        order: 18,
+        stage: 0,
+        riddle: "Linnea, you have my ______ in your hands",
+        blurb: `Linnea, you have my heart; you know this. But I want you to know how much I appreciate it. I don't give it away easily, nor do I give it away without serious thought, and yet... giving it to you was perhaps the easiest thing I've done in a long time. It's so, so comforting to know that I'm not alone, that there's someone, somewhere, who's looking out for me - someone that has my back. I want you to know that, no matter what happens, I've got yours too! I can honestly say I've never felt so supported, so safe, and so comfortable being myself than I feel with you. And no, I will not stop telling you how much I like you, deal with hit ;)`,
+    },
+    favorite: {
+        order: 19,
+        stage: 0,
+        riddle: "You're my ____ person",
+        blurb: `It's true! I say it all the time but I wanted to take a moment and tell you what that really means. It means that I care more about you than I care about pretty much anyone else. It means I don't trust anyone as much as I trust you. It means your opinions, perspectives, and thoughts matter more to me than anyone else's. In short, it means you matter to me more than anyeone else, really. Friends come and go, but someone like you babe? Someone like you only comes around once, and I'm beyond ecstatic you've chosen to spend your time with me :))`,
+    },
+    flight: {
+        order: 20,
+        stage: 0,
+        riddle: "Here are my ____ details",
+        blurb: `Flight 1012, arriving in San Diego (SAN) at exactly 6:40 pm. I'll have to pick up my checked bag, then I'll be taking an uber to 3520 Lebon Drive, 5321, San Diego, CA 92122. Then, I'll probably take a shower, and then who knows?`,
+    },
+    today: {
+        order: 21,
+        stage: 0,
+        riddle: "_____'s The Day!",
+        blurb: `It's actually happening baby! I like you so, so much, and I cannot wait to see you. Remember, Flight 1012. Don't worry, I'll probably text you today too, so no need to remember ;). I know it's scary, and I'm scared too, but I'm so glad we're finally able to do this. I'm so happy I met you, and I can't wait to meet you! Mkay bye Linnea, I like you, and I'll see you soon :)).`,
+    }
 };
 
 const audio = new Audio('./resources/audio/vote_results.mp3');
