@@ -1,0 +1,38 @@
+#root {
+    padding: 10px;
+}
+
+.location {
+    border: 3px solid white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: -moz-fit-content;
+    width: fit-content;
+    border-radius: 5px;
+    padding: 10px;
+
+    button {
+        cursor: pointer;
+        padding: 5px;
+        background-color: lightgreen;
+        border: none;
+        border-radius: 5px;
+        font-size: 150%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    p {
+        margin: 0;
+    }
+    .loc-name {
+        font-weight: bold;
+    }
+
+    .loc-dist {
+        font-style: italic;
+    }
+}

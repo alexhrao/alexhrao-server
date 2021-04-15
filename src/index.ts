@@ -65,6 +65,7 @@ app.use('/tokens', json());
 app.use('/login', json());
 app.use('/create', json());
 app.use('/reset', json());
+app.use('/pwrpuff', json());
 const memStorage = multer.memoryStorage();
 const fileManager = multer({
     storage: memStorage,
@@ -663,6 +664,16 @@ app.post('/readflix/books', fileManager.single('pdf'), async (req, res) => {
         ]
     });
     res.sendStatus(200);
+});
+
+app.get('/pwrpuff', (req, res) => {
+    res.status(200)
+        .contentType('html')
+        .sendFile(join(__dirname, 'resources/html/pwrpuff.html'));
+});
+
+app.post('/pwrpuff', (req, res) => {
+
 });
 
 
