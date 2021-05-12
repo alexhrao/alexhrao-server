@@ -57,8 +57,15 @@ const transport = getAccount('aws')
     });
 
 const app = express();
+const staticHandler = staticServer(join(__dirname, './resources/'));
+const memStorage = multer.memoryStorage();
+const fileManager = multer({
+    storage: memStorage,
+});
 
-app.use('/resources', staticServer(join(__dirname, './resources/')));
+const slackCredentials = getAccount('slack');
+
+app.use('/resources', staticHandler);
 app.use('/slack/events', json());
 app.use('/transcripts', json());
 app.use('/tokens', json());
@@ -66,12 +73,6 @@ app.use('/login', json());
 app.use('/create', json());
 app.use('/reset', json());
 app.use('/pwrpuff', json());
-const memStorage = multer.memoryStorage();
-const fileManager = multer({
-    storage: memStorage,
-});
-
-const slackCredentials = getAccount('slack');
 
 app.get('/', (_, res) => {
     // send basic

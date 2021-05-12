@@ -305,7 +305,7 @@ const confettiSetup = () => {
 };
 let confetti: Confetti;
 const vendorFlag = true;
-const dateFlag = false;
+const dateFlag = true;
 const stages: { [key: string]: Riddle } = {
     linnea: {
         order: -1,
@@ -450,7 +450,13 @@ const stages: { [key: string]: Riddle } = {
         stage: 0,
         riddle: "_____'s The Day!",
         blurb: `It's actually happening baby! I like you so, so much, and I cannot wait to see you. Remember, Flight 1012. Don't worry, I'll probably text you today too, so no need to remember ;). I know it's scary, and I'm scared too, but I'm so glad we're finally able to do this. I'm so happy I met you, and I can't wait to meet you! Mkay bye Linnea, I like you, and I'll see you soon :)).`,
-    }
+    },
+    love: {
+        order: 22,
+        stage: 0,
+        riddle: "I <3 You!",
+        blurb: `Baby, I can't believe it's already been six months. On the other hand... I can't believe it's only been six months! I know I've said it a billion times, but I'll say it a billion more - you have had an incredibly positive impact on my life. I've known you for just a year, but honestly Linnea, it feels like I've known you for so much longer. We've had our ups and downs, but never once have I doubted that I love you. So for what will not even remotely be the last time: Linnea, I love you, and I am so unbelievably lucky to be in love with you. These past six months have been the best six months of my life, and I can safely say it's because you were in them... I can't wait to see what the next six months hold :)). Happy Anniversary Baby; Love, Alex <3`,
+    },
 };
 
 const audio = new Audio('./resources/audio/vote_results.mp3');
@@ -626,14 +632,14 @@ function openYourWorld() {
         li.appendChild(solitaireLink);
         navBarList.appendChild(li);
     }
-    if (dateFlag) {
-        const plan = document.querySelector<HTMLDivElement>('#plan')!;
-        if (vendorFlag) {
-            plan.style.display = 'block';
-        }
-        plan.classList.add('linnea', 'about-section');
-        sectionHolder.appendChild(plan);
-    }
+    // if (dateFlag) {
+    //     const plan = document.querySelector<HTMLDivElement>('#plan')!;
+    //     if (vendorFlag) {
+    //         plan.style.display = 'block';
+    //     }
+    //     plan.classList.add('linnea', 'about-section');
+    //     sectionHolder.appendChild(plan);
+    // }
     {
         const movieLink = document.createElement('a');
         movieLink.href = 'https://docs.google.com/document/d/1gSxFdSrdByr7G_WG9tI2tcSzsGy39L-sK0Z7-umKyB0/edit?usp=sharing';
