@@ -305,7 +305,7 @@ const confettiSetup = () => {
 };
 let confetti: Confetti;
 const vendorFlag = true;
-const dateFlag = true;
+const dateFlag = false;
 const stages: { [key: string]: Riddle } = {
     linnea: {
         order: -1,
@@ -456,6 +456,30 @@ const stages: { [key: string]: Riddle } = {
         stage: 0,
         riddle: "I <3 You!",
         blurb: `Baby, I can't believe it's already been six months. On the other hand... I can't believe it's only been six months! I know I've said it a billion times, but I'll say it a billion more - you have had an incredibly positive impact on my life. I've known you for just a year, but honestly Linnea, it feels like I've known you for so much longer. We've had our ups and downs, but never once have I doubted that I love you. So for what will not even remotely be the last time: Linnea, I love you, and I am so unbelievably lucky to be in love with you. These past six months have been the best six months of my life, and I can safely say it's because you were in them... I can't wait to see what the next six months hold :)). Happy Anniversary Baby; Love, Alex <3`,
+    },
+    difficult: {
+        order: 23,
+        stage: 0,
+        riddle: "I love you, even during _________ conversations",
+        blurb: `Hey Linnea, relationships aren't always easy. It takes time and effort, and sometimes it's really hard to see eye to eye. Sometimes it might even feel impossible to come to some kind of consensus; sometimes I know it can feel demoralizing. But I want to take a moment to tell you how much I appreciate your willingness to have these conversations anyway. Dating me isn't always easy, this is something I know. Which is why it means the world to me that you're doing so anyway. I love you Linnea, and while I can't promise it'll always be easy, I can promise that I will always do my best to understand your view, respect your thoughts, and reach consensus where we can.`,
+    },
+    atlanta: {
+        order: 24,
+        stage: 0,
+        riddle: "I can't wait for you to come to _______!",
+        blurb: `I can't believe it's only a month away! I hope recent conversations haven't put a damper on your thoughts about coming to visit me, but I want to take just a second and tell you how excited I am to host you. I can't wait to show you my campus, my buildings, my home. I can't wait to take you to the aquarium and Piedmont Park. I can promise you that it won't be as fun as San Diego (your city wins by a **long shot**), but hopefully I can at least make it worth the trip!`,
+    },
+    think: {
+        order: 25,
+        stage: 0,
+        riddle: "Baby, I could _____ about you all day",
+        blurb: `Oh Linnea. I'm sitting here, struggling to come up with the best way to show you how much I love you. And of course, the problem is no matter what I do, there's no way it's enough. Not because you won't appreciate it - you're very good at being appreciative :)) - but because it won't **feel** like it's been enough. It won't feel as though I've fully explained to you how I feel about you. So consider this a poor attempt at capturing even just a whisper of my love for you Linnea. I love you so much; I think about you all the time. Whether we're talking about fluff, substance, or something difficult... As long as you're there, I'm happy and excited to be there too. I love you baby, and I just want to make sure you know it :))`,
+    },
+    rain: {
+        order: 26,
+        stage: 0,
+        riddle: "The best kind of weather?",
+        blurb: `It's raining here, and it got me thinking about us. I think the reason we've survived long distance (even thrived, if you ask me!) is because of how compatible we are. Think about it: Long Distance is hard for everyone; it's universally a **worse arrangement**. And yet, our relationship has blossomed into the beautiful thing it is today, all the while being remote. If we're this good together virtually, I think that bodes so well for the anniversaries to come :))`,
     },
 };
 
