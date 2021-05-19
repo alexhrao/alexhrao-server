@@ -481,6 +481,12 @@ const stages: { [key: string]: Riddle } = {
         riddle: "The best kind of weather?",
         blurb: `It's raining here, and it got me thinking about us. I think the reason we've survived long distance (even thrived, if you ask me!) is because of how compatible we are. Think about it: Long Distance is hard for everyone; it's universally a **worse arrangement**. And yet, our relationship has blossomed into the beautiful thing it is today, all the while being remote. If we're this good together virtually, I think that bodes so well for the anniversaries to come :))`,
     },
+    surprise: {
+        order: 27,
+        stage: 0,
+        riddle: "This one's probably a ________ to you, hehehe...",
+        blurb: `Mwahahaha, I'm sure you didn't expect this after I sent that message :)). Too bad, I like (and love!) you too much, so today you're getting both. It's funny, you know, I simultaneously feel like I've said so much and nothing at all; I've told you that I like you, that I love you, that I'm lucky to be yours... but it doesn't feel complete. Perhaps all that's missing is a big hug and a small kiss! But for the record, I'm happy to say it again: Baby, I'm in love with you, head over heels. I'm so glad (and lucky!) that I'm yours, and I can't wait to see you!! Mmmm but before I go, did you check the link bar at the top? Something may have been added there...`
+    }
 };
 
 const audio = new Audio('./resources/audio/vote_results.mp3');
