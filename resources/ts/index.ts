@@ -732,6 +732,7 @@ function openYourWorld() {
         icon.classList.add('fal', 'fa-bomb');
         bomb.appendChild(icon);
         bomb.href = 'https://alexhrao.github.io/mine-solver/';
+        bomb.id = 'bomb';
         const li = document.createElement('li');
         li.appendChild(bomb);
         navBarList.appendChild(li);
