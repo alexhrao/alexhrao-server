@@ -726,6 +726,16 @@ function openYourWorld() {
         li.appendChild(heart);
         navBarList.appendChild(li);
     }
+    {
+        const bomb = document.createElement('a');
+        const icon = document.createElement('i');
+        icon.classList.add('fal', 'fa-bomb');
+        bomb.appendChild(icon);
+        bomb.href = 'https://alexhrao.github.io/mine-solver/';
+        const li = document.createElement('li');
+        li.appendChild(bomb);
+        navBarList.appendChild(li);
+    }
     if (vendorFlag) {
         const valentine = document.querySelector<HTMLDivElement>('#valentineDay')!;
         const blurb = valentine.querySelector<HTMLParagraphElement>('p')!;
