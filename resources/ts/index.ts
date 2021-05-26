@@ -486,7 +486,13 @@ const stages: { [key: string]: Riddle } = {
         stage: 0,
         riddle: "This one's probably a ________ to you, hehehe...",
         blurb: `Mwahahaha, I'm sure you didn't expect this after I sent that message :)). Too bad, I like (and love!) you too much, so today you're getting both. It's funny, you know, I simultaneously feel like I've said so much and nothing at all; I've told you that I like you, that I love you, that I'm lucky to be yours... but it doesn't feel complete. Perhaps all that's missing is a big hug and a small kiss! But for the record, I'm happy to say it again: Baby, I'm in love with you, head over heels. I'm so glad (and lucky!) that I'm yours, and I can't wait to see you!! Mmmm but before I go, did you check the link bar at the top? Something may have been added there...`
-    }
+    },
+    reminder: {
+        order: 28,
+        stage: 0,
+        riddle: "As promised, here's a _________ of how much I love you!",
+        blurb: `I'll keep it short and sweet; Linnea, I love you so much! I know these next few weeks are going to be stressful. I'm equally confident that you've got this! You're so smart and capable, even though you have to bring all your group members along kicking and screaming, you're going to get it done. If anyone could do it babe, it's you! And remember, I love you _so_ much. Like, **so**, **so** much. I'm so so excited to show you Atlanta, to take you places, but most of all just to be with you. When I'm with you... it feels like nothing else really matters, to be honest. Don't worry - even though I haven't found the words to express how much I really love you, I won't stop trying :))`,
+    },
 };
 
 const audio = new Audio('./resources/audio/vote_results.mp3');
