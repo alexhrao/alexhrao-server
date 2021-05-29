@@ -3,6 +3,10 @@ import ts from 'gulp-typescript';
 import sass from 'gulp-sass';
 import zip from 'gulp-zip';
 import autoprefix from 'gulp-autoprefixer';
+import dartCompiler from 'sass';
+
+
+((sass as unknown) as { compiler: any }).compiler = dartCompiler;
 
 const tsProject = ts.createProject('tsconfig.json');
 const resourceTS = ts.createProject('resources/tsconfig.json');
