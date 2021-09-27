@@ -67,12 +67,12 @@ gulp.task('credentials', () => {
 });
 
 gulp.task('aws', () => {
-    return gulp.src(['./aws/.**/*', './aws/.npmrc', './package.json'])
+    return gulp.src(['./aws/.**/**/*', './aws/.npmrc', './package.json'])
         .pipe(gulp.dest('dist'));
 });
 
 gulp.task('aws-build', () => {
-    return gulp.src(['dist/**/*', 'dist/**/.*', 'dist/.**/*', 'dist/.**/.*'])
+    return gulp.src(['dist/**/*', 'dist/**/.*', 'dist/.**/**', 'dist/.**/.**'])
         .pipe(zip('aws.zip'))
         .pipe(gulp.dest('./'));
 });
