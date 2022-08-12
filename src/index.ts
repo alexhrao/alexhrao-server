@@ -81,6 +81,12 @@ app.get('/', (_, res) => {
         .sendFile(join(__dirname, 'resources/html/index.html'));
 });
 
+app.get('/concussion/privacy', (_, res) => {
+    res.status(200)
+        .contentType('html')
+        .sendFile(join(__dirname, 'resources/html/concussion-privacy.html'));
+});
+
 app.get('/readflix', async (req, res) => {
     if (req.query['paid'] !== undefined) {
         const sender = await transport;
