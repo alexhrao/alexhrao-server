@@ -86,6 +86,11 @@ app.get('/concussion/privacy', (_, res) => {
         .contentType('html')
         .sendFile(join(__dirname, 'resources/html/concussion-privacy.html'));
 });
+app.get('/concussed/privacy', (_, res) => {
+    res.status(200)
+        .contentType('html')
+        .sendFile(join(__dirname, 'resources/html/concussion-privacy.html'));
+});
 
 app.get('/readflix', async (req, res) => {
     if (req.query['paid'] !== undefined) {
