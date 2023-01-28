@@ -8,7 +8,8 @@
       "ts/crossword.ts",
       "ts/readflix.ts",
       "ts/writeflix.ts",
-      "ts/pwrpuff.ts"
+      "ts/pwrpuff.ts",
+      "ts/spbee.ts"
     ],
     "compilerOptions": {
       /* Visit https://aka.ms/tsconfig.json to read more about this file */

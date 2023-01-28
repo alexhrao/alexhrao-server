@@ -5,6 +5,8 @@ import { promises as fs } from 'fs';
 import fetch from 'node-fetch';
 import querystring from 'querystring';
 import { join } from 'path';
+import { rateLimit } from 'express-rate-limit';
+import { JSDOM } from 'jsdom';
 import {
     AuthPayload,
     LoginPayload,
@@ -39,6 +41,8 @@ import {
     TranscriptPayload
 } from './transcript';
 
+import { fetchDay } from './spbee';
+
 import { getBooks, addSnap } from './books';
 
 import { createTransport} from 'nodemailer';
@@ -62,6 +66,12 @@ const memStorage = multer.memoryStorage();
 const fileManager = multer({
     storage: memStorage,
 });
+const limiter = rateLimit({
+    max: 100,
+    windowMs: 15 * 60 * 1000,
+    legacyHeaders: false,
+    standardHeaders: true,
+});
 
 const slackCredentials = getAccount('slack');
 
@@ -73,6 +83,7 @@ app.use('/login', json());
 app.use('/create', json());
 app.use('/reset', json());
 app.use('/pwrpuff', json());
+app.use('/spellingbee', json(), limiter);
 
 app.get('/', (_, res) => {
     // send basic
@@ -688,6 +699,26 @@ app.post('/pwrpuff', (req, res) => {
 
 });
 
+
+app.get('/spellingbee', (req, res) => {
+    res.status(200)
+        .contentType('html')
+        .sendFile(join(__dirname, 'resources/html/spellingbee.html'));
+});
+
+app.post('/spellingbee', (req, res) => {
+    const day = (req.body.day ?? '').length === 0 ? new Date() : new Date(req.body.day as string);
+    fetchDay(day)
+        .then(sp => {
+            res.status(200);
+            res.contentType('json');
+            res.send(JSON.stringify(sp));
+        })
+        .catch((e) => {
+            console.error(e);
+            res.sendStatus(500);
+        });
+});
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Listening on port ${process.env.PORT || 3000}`);

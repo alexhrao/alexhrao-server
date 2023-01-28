@@ -98,7 +98,7 @@ const confettiSetup = () => {
         isPaused: isConfettiPaused,     //call and returns true or false depending on whether the confetti animation is paused
         isRunning: isConfettiRunning	    //call and returns true or false depending on whether the animation is running
     };
-    const supportsAnimationFrame = (window.requestAnimationFrame ?? window.webkitRequestAnimationFrame) !== undefined;
+    const supportsAnimationFrame = window.requestAnimationFrame !== undefined;
     const colors = ["rgba(30,144,255,", "rgba(107,142,35,", "rgba(255,215,0,", "rgba(255,192,203,", "rgba(106,90,205,", "rgba(173,216,230,", "rgba(238,130,238,", "rgba(152,251,152,", "rgba(70,130,180,", "rgba(244,164,96,", "rgba(210,105,30,", "rgba(220,20,60,"];
     let streamingConfetti = false;
     let pause = false;
@@ -173,7 +173,6 @@ const confettiSetup = () => {
     function startConfetti(timeout?: number, min?: number, max?: number) {
         const animator = () => {
             return window.requestAnimationFrame
-                ?? window.webkitRequestAnimationFrame
                 ?? (callback => window.setTimeout(callback, confetti.frameInterval));
         }
         innerWidth = document.documentElement.scrollWidth*0.99;
